@@ -1,1946 +1,642 @@
 <!DOCTYPE html>
-<html lang="id" data-theme="auto">
+<html lang="id" data-theme="system">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" href="https://avatars.githubusercontent.com/u/40856427?v=4" type="image/png" />
-    <meta name="description" content="Payment Info - officialputuid" />
-    <title>Payment — officialputuid</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap"
-      rel="stylesheet"
-    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="color-scheme" content="dark light" />
+    <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#f2f2f7" media="(prefers-color-scheme: light)" />
+    <title>Payment Info — officialputuid</title>
+    <meta name="description" content="Official payment information of officialputuid (I Putu Jaya Adi Pranata): bank transfer, e-wallet, and crypto. Always verify account details here before sending." />
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="canonical" href="https://payment.officialputuid.dpdns.org" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Payment Info — officialputuid" />
+    <meta property="og:description" content="Official payment info: bank transfer, e-wallet, crypto. A/N I Putu Jaya Adi Pranata." />
+    <meta property="og:url" content="https://payment.officialputuid.dpdns.org" />
+    <meta property="og:image" content="https://payment.officialputuid.dpdns.org/assets/og-payment.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="icon" href="https://officialputuid.dpdns.org/assets/avatar.jpg" type="image/jpeg" />
+    <link rel="apple-touch-icon" href="https://officialputuid.dpdns.org/assets/avatar.jpg" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+    <!-- Apply saved theme before first paint (no flash) -->
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem("theme");
+          var html = document.documentElement;
+          if (t === "dark" || t === "light") html.dataset.theme = t;
+          var dark = t === "dark" || (t !== "light" && matchMedia("(prefers-color-scheme: dark)").matches);
+          html.classList.toggle("is-dark", dark);
+        } catch (e) {}
+      })();
+    </script>
+
     <style>
-      /* ============================================================
-         MODERN INDIGO PALETTE — inspired by Stripe · Linear · Vercel
-         ============================================================ */
-      *, *::before, *::after {
-          margin: 0; padding: 0; box-sizing: border-box;
-      }
-      html { scroll-behavior: smooth; }
-
+      /* ─────────────── Tokens (shared with the profile page) ─────────────── */
       :root {
-          --brand-50:  #eef2ff;
-          --brand-100: #e0e7ff;
-          --brand-200: #c7d2fe;
-          --brand-300: #a5b4fc;
-          --brand-400: #818cf8;
-          --brand-500: #6366f1;
-          --brand-600: #4f46e5;
-          --brand-700: #4338ca;
-          --brand-800: #3730a3;
-          --brand-900: #312e81;
-
-          --slate-0:   #ffffff;
-          --slate-50:  #f8fafc;
-          --slate-100: #f1f5f9;
-          --slate-200: #e2e8f0;
-          --slate-300: #cbd5e1;
-          --slate-400: #94a3b8;
-          --slate-500: #64748b;
-          --slate-600: #475569;
-          --slate-700: #334155;
-          --slate-800: #1e293b;
-          --slate-900: #0f172a;
-          --slate-950: #020617;
-
-          --success:   #10b981;
-          --warning:   #f59e0b;
-          --error:     #ef4444;
-
-          --bg:        var(--slate-50);
-          --bg-grad-1: #f5f7ff;
-          --bg-grad-2: #e0e7ff;
-          --surface:   var(--slate-0);
-          --surface-2: var(--slate-50);
-          --border:    var(--slate-200);
-          --border-strong: var(--slate-300);
-
-          --text-primary:   var(--slate-900);
-          --text-secondary: var(--slate-600);
-          --text-tertiary:  var(--slate-500);
-          --text-inverse:   var(--slate-0);
-
-          --md-primary:        var(--brand-600);
-          --md-on-primary:     var(--slate-0);
-          --md-primary-hover:  var(--brand-700);
-          --md-primary-soft:   var(--brand-50);
-          --md-on-primary-soft: var(--brand-700);
-
-          --elev-1: 0 1px 2px rgba(15, 23, 42, .04);
-          --elev-2: 0 1px 2px rgba(15, 23, 42, .04), 0 4px 12px rgba(15, 23, 42, .06);
-          --elev-3: 0 4px 6px rgba(15, 23, 42, .04), 0 10px 24px rgba(15, 23, 42, .08);
-          --elev-4: 0 8px 16px rgba(15, 23, 42, .06), 0 20px 40px rgba(15, 23, 42, .10);
-          --elev-5: 0 12px 24px rgba(79, 70, 229, .12), 0 32px 64px rgba(79, 70, 229, .16);
-
-          --r-xs: 6px; --r-sm: 10px; --r-md: 14px; --r-lg: 18px;
-          --r-xl: 24px; --r-2xl: 32px; --r-full: 9999px;
-
-          --ease-spring: cubic-bezier(.34, 1.56, .64, 1);
-          --ease-out:    cubic-bezier(.2, 0, 0, 1);
-          --dur-fast: 150ms; --dur: 250ms; --dur-slow: 400ms;
-
-          --max-w: 1200px;
-          --gutter: 24px;
-
-          /* Brand method colors (flat — final spec) */
-          --nobu:      #00c992;
-          --seabank:   #e15c01;
-          --krom:      #4547c0;
-          --jago:      #ec4899;
-          --superbank: #a8e501;
-          --dana:      #3399e3;
-          --gopay:     #00a8cf;
-          --ovo:       #6031df;
-          --shopeepay: #df4c2f;
-          --eth:       #627eea;
-          --usdt:      #26a17b;
-          --btc:       #f7931a;
-          --sol:       #14f195;
+        --font: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+        --mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
+        --r-card: 22px; --r-icon: 10px;
+        --ease: cubic-bezier(0.32, 0.72, 0, 1);
+        --bg: #f2f2f7;
+        --bg-glow-1: rgba(48, 209, 88, 0.2);
+        --bg-glow-2: rgba(10, 132, 255, 0.18);
+        --card: rgba(255, 255, 255, 0.78);
+        --card-border: rgba(255, 255, 255, 0.6);
+        --row-press: rgba(0, 0, 0, 0.06);
+        --separator: rgba(60, 60, 67, 0.12);
+        --label: #000; --label-2: rgba(60, 60, 67, 0.6); --label-3: rgba(60, 60, 67, 0.3);
+        --tint: #0a84ff; --tint-bg: rgba(10, 132, 255, 0.12);
+        --green: #30d158; --green-bg: rgba(48, 209, 88, 0.14); --green-text: #1f9d47;
+        --orange: #ff9f0a; --orange-bg: rgba(255, 159, 10, 0.15); --orange-text: #b36b00;
+        --seg-bg: rgba(118, 118, 128, 0.12); --seg-thumb: #fff;
+        --field-bg: rgba(118, 118, 128, 0.12);
+        --toast-bg: rgba(28, 28, 30, 0.92); --toast-fg: #fff;
+        --shadow: 0 1px 2px rgba(0,0,0,0.04), 0 8px 24px rgba(0,0,0,0.06);
+        --tg: #26a5e4; --wa: #25d366;
+        /* brand colours */
+        --nobu: #00c992; --seabank: #e15c01; --krom: #4547c0; --jago: #ec4899; --superbank: #8ac400;
+        --dana: #3399e3; --gopay: #00a8cf; --ovo: #6031df; --shopeepay: #ee4d2d;
+        --eth: #627eea; --usdt: #26a17b; --btc: #f7931a; --sol: #9945ff;
+      }
+      .is-dark {
+        color-scheme: dark;
+        --bg: #000;
+        --bg-glow-1: rgba(48, 209, 88, 0.22); --bg-glow-2: rgba(10, 132, 255, 0.25);
+        --card: rgba(28, 28, 30, 0.78); --card-border: rgba(255, 255, 255, 0.08);
+        --row-press: rgba(255, 255, 255, 0.08); --separator: rgba(84, 84, 88, 0.5);
+        --label: #fff; --label-2: rgba(235, 235, 245, 0.6); --label-3: rgba(235, 235, 245, 0.3);
+        --tint-bg: rgba(10, 132, 255, 0.2);
+        --green-text: #4ade80; --orange-text: #ffb340;
+        --seg-bg: rgba(118, 118, 128, 0.24); --seg-thumb: #636366;
+        --field-bg: rgba(118, 118, 128, 0.24);
+        --toast-bg: rgba(44, 44, 46, 0.92);
+        --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
       }
 
-      [data-theme="dark"] {
-          --bg:        #0a0a14;
-          --bg-grad-1: #0a0a14;
-          --bg-grad-2: #14142b;
-          --surface:   #131325;
-          --surface-2: #1a1a32;
-          --border:    #2a2a45;
-          --border-strong: #3a3a55;
-
-          --text-primary:   #f1f5f9;
-          --text-secondary: #94a3b8;
-          --text-tertiary:  #64748b;
-          --text-inverse:   #0f172a;
-
-          --md-primary:        var(--brand-400);
-          --md-on-primary:     var(--slate-900);
-          --md-primary-hover:  var(--brand-300);
-          --md-primary-soft:   rgba(99, 102, 241, .15);
-          --md-on-primary-soft: var(--brand-300);
-
-          --elev-1: 0 1px 2px rgba(0, 0, 0, .3);
-          --elev-2: 0 1px 2px rgba(0, 0, 0, .4), 0 4px 12px rgba(0, 0, 0, .4);
-          --elev-3: 0 4px 6px rgba(0, 0, 0, .4), 0 10px 24px rgba(0, 0, 0, .5);
-          --elev-4: 0 8px 16px rgba(0, 0, 0, .5), 0 20px 40px rgba(0, 0, 0, .6);
-          --elev-5: 0 12px 24px rgba(99, 102, 241, .3), 0 32px 64px rgba(0, 0, 0, .7);
-      }
-
-      @media (prefers-color-scheme: dark) {
-          [data-theme="auto"] {
-              --bg:        #0a0a14;
-              --bg-grad-1: #0a0a14;
-              --bg-grad-2: #14142b;
-              --surface:   #131325;
-              --surface-2: #1a1a32;
-              --border:    #2a2a45;
-              --border-strong: #3a3a55;
-              --text-primary:   #f1f5f9;
-              --text-secondary: #94a3b8;
-              --text-tertiary:  #64748b;
-              --text-inverse:   #0f172a;
-              --md-primary:        var(--brand-400);
-              --md-on-primary:     var(--slate-900);
-              --md-primary-hover:  var(--brand-300);
-              --md-primary-soft:   rgba(99, 102, 241, .15);
-              --md-on-primary-soft: var(--brand-300);
-          }
-      }
-
+      /* ─────────────── Base ─────────────── */
+      *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+      html { -webkit-text-size-adjust: 100%; }
       body {
-          font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-          background: var(--bg);
-          background-image: linear-gradient(180deg, var(--bg-grad-1) 0%, var(--bg-grad-2) 100%);
-          background-attachment: fixed;
-          color: var(--text-primary);
-          line-height: 1.6;
-          -webkit-font-smoothing: antialiased;
-          -moz-osx-font-smoothing: grayscale;
-          min-height: 100vh;
+        min-height: 100dvh; font-family: var(--font); background: var(--bg); color: var(--label);
+        -webkit-font-smoothing: antialiased;
+        padding: max(24px, env(safe-area-inset-top)) 16px max(32px, env(safe-area-inset-bottom));
+        display: flex; justify-content: center; transition: background-color 0.35s ease;
       }
+      body::before {
+        content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none;
+        background: radial-gradient(60% 45% at 15% 0%, var(--bg-glow-1), transparent 70%),
+                    radial-gradient(55% 40% at 90% 100%, var(--bg-glow-2), transparent 70%);
+      }
+      a { color: inherit; text-decoration: none; -webkit-tap-highlight-color: transparent; }
+      button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+      input { font: inherit; color: inherit; }
+      :focus-visible { outline: 3px solid var(--tint); outline-offset: 2px; }
+      [hidden] { display: none !important; }
+      .app { width: 100%; max-width: 620px; display: flex; flex-direction: column; gap: 22px; }
+      .in { opacity: 0; transform: translateY(14px) scale(0.985); animation: in 0.6s var(--ease) forwards; animation-delay: var(--d, 0ms); }
+      @keyframes in { to { opacity: 1; transform: none; } }
 
-      h1, h2, h3, h4 {
-          font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
-          letter-spacing: -0.02em;
-          line-height: 1.2;
+      /* ─────────────── Nav ─────────────── */
+      .nav { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+      .nav-btn {
+        display: inline-flex; align-items: center; gap: 6px; height: 34px; padding: 0 12px; border-radius: 999px;
+        background: var(--card); border: 1px solid var(--card-border); color: var(--tint); font-size: 14px; font-weight: 600;
+        box-shadow: var(--shadow); transition: transform 0.2s var(--ease), opacity 0.2s; white-space: nowrap;
       }
+      .nav-btn:active { transform: scale(0.94); opacity: 0.8; }
+      .nav-btn svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+      .nav-btn.lang { color: var(--label-2); font-weight: 700; font-size: 13px; min-width: 44px; justify-content: center; }
+      .nav-btn .lbl { max-width: 160px; overflow: hidden; text-overflow: ellipsis; }
 
-      .mono { font-family: 'JetBrains Mono', monospace; }
+      /* ─────────────── URL check ─────────────── */
+      .urlcheck { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; justify-content: center; text-align: center; font-size: 12px; color: var(--label-2); padding: 8px 12px; border-radius: 12px; background: var(--card); border: 1px solid var(--card-border); }
+      .urlcheck > span { text-align: center; }
+      @media (max-width: 560px) { .urlcheck { flex-direction: column; gap: 6px; } .urlcheck > span:not(.urlstate) { display: block; width: 100%; } .urlcheck b { display: block; } }
+      .urlcheck svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+      .urlcheck b { color: var(--label); font-family: var(--mono); font-weight: 600; }
+      .urlstate { font-weight: 700; padding: 1px 8px; border-radius: 999px; }
+      .urlstate.ok { background: var(--green-bg); color: var(--green-text); }
+      .urlstate.bad { background: rgba(255,69,58,0.14); color: #d70015; }
+      .is-dark .urlstate.bad { color: #ff6961; }
+      .urlstate { text-align: center; line-height: 1.4; }
 
-      /* ============================================================
-         HEADER
-         ============================================================ */
-      .header {
-          position: sticky; top: 0; z-index: 100;
-          background: color-mix(in srgb, var(--surface) 85%, transparent);
-          backdrop-filter: saturate(180%) blur(20px);
-          -webkit-backdrop-filter: saturate(180%) blur(20px);
-          border-bottom: 1px solid var(--border);
+      /* ─────────────── Hero ─────────────── */
+      .hero { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 10px; }
+      .avatar { position: relative; width: 92px; height: 92px; border-radius: 50%; padding: 3px; background: var(--card); border: 1px solid var(--card-border); box-shadow: var(--shadow); }
+      .avatar img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; display: block; }
+      .avatar .shield {
+        position: absolute; right: -2px; bottom: -2px; width: 30px; height: 30px; border-radius: 50%;
+        background: var(--green); color: #fff; display: grid; place-items: center; border: 3px solid var(--bg); transition: border-color 0.35s;
       }
-      .header-inner {
-          max-width: var(--max-w); margin: 0 auto;
-          padding: 14px var(--gutter);
-          display: flex; align-items: center; justify-content: space-between; gap: 16px;
-      }
-      .brand {
-          display: flex; align-items: center; gap: 12px;
-          text-decoration: none; color: inherit;
-      }
-      .brand-mark {
-          width: 36px; height: 36px;
-          border-radius: var(--r-md);
-          background: linear-gradient(135deg, var(--brand-500) 0%, var(--brand-700) 100%);
-          display: flex; align-items: center; justify-content: center;
-          color: white; font-weight: 800; font-size: 16px;
-          box-shadow: 0 4px 12px rgba(99, 102, 241, .35);
-          overflow: hidden;
-      }
-      .brand-mark img {
-          width: 100%; height: 100%;
-          object-fit: cover;
-          border-radius: var(--r-md);
-      }
-      .brand-text { display: flex; flex-direction: column; line-height: 1.2; }
-      .brand-name {
-          font-family: 'Plus Jakarta Sans', sans-serif;
-          font-weight: 700; font-size: 15px; color: var(--text-primary);
-      }
-      .brand-sub {
-          font-size: 11px; color: var(--text-tertiary);
-          font-weight: 500; letter-spacing: 0.02em;
-      }
-      .header-actions { display: flex; align-items: center; gap: 8px; }
-      .status-pill {
-          display: inline-flex; align-items: center; gap: 6px;
-          padding: 6px 12px;
-          background: color-mix(in srgb, var(--success) 12%, transparent);
-          color: var(--success);
-          border: 1px solid color-mix(in srgb, var(--success) 25%, transparent);
-          border-radius: var(--r-full);
-          font-size: 11px; font-weight: 600; letter-spacing: 0.02em;
-      }
-      .status-dot {
-          width: 6px; height: 6px;
-          background: var(--success);
-          border-radius: 50%;
-          animation: pulse-dot 2s ease-out infinite;
-      }
-      @keyframes highlight-flash {
-          0%, 100% { text-shadow: 0 0 0px rgba(255, 215, 0, 0), 0 0 8px rgba(255, 215, 0, 0); }
-          50% { text-shadow: 0 0 12px rgba(255, 215, 0, 0.8), 0 0 24px rgba(255, 215, 0, 0.6); }
-      }
+      .avatar .shield svg { width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; }
+      .title { font-size: 26px; font-weight: 700; letter-spacing: -0.4px; line-height: 1.15; }
+      .subtitle { font-size: 15px; color: var(--label-2); line-height: 1.5; max-width: 420px; }
+      .chips { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; margin-top: 4px; }
+      .chip { display: inline-flex; align-items: center; gap: 6px; height: 30px; padding: 0 12px; border-radius: 999px; background: var(--tint-bg); color: var(--tint); font-size: 13px; font-weight: 600; }
+      .chip.green { background: var(--green-bg); color: var(--green-text); }
+      .chip svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
 
-      .highlight-flash {
-          animation: highlight-flash 1.2s ease-in-out infinite;
-          font-weight: 700;
-      }
-      .icon-btn {
-          width: 36px; height: 36px;
-          border-radius: var(--r-md);
-          background: var(--surface-2);
-          border: 1px solid var(--border);
-          color: var(--text-secondary);
-          cursor: pointer;
-          display: flex; align-items: center; justify-content: center;
-          transition: all var(--dur) var(--ease-out);
-      }
-      .icon-btn:hover {
-          background: var(--md-primary-soft);
-          color: var(--md-primary);
-          border-color: color-mix(in srgb, var(--md-primary) 30%, transparent);
-      }
-      .icon-btn svg { width: 18px; height: 18px; }
-
-      /* LANGUAGE SELECTOR */
-      .lang-selector {
-          position: relative;
-      }
-      .lang-btn {
-          width: 36px; height: 36px;
-          display: flex; align-items: center; justify-content: center;
-          background: var(--surface-2);
-          border: 1px solid var(--border);
-          cursor: pointer;
-          color: var(--text-secondary);
-          font-size: 12px; font-weight: 600;
-          padding: 0;
-          border-radius: var(--r-md);
-          transition: all var(--dur) var(--ease-out);
-      }
-      .lang-btn:hover {
-          background: var(--md-primary-soft);
-          color: var(--md-primary);
-          border-color: color-mix(in srgb, var(--md-primary) 30%, transparent);
-      }
-      .lang-menu {
-          position: absolute; top: calc(100% + 6px); right: 0;
-          background: var(--surface);
-          border: 1px solid var(--border);
-          border-radius: var(--r-md);
-          box-shadow: var(--elev-3);
-          min-width: 160px;
-          display: none;
-          flex-direction: column;
-          z-index: 100;
-          overflow: hidden;
-      }
-      .lang-menu.active {
-          display: flex;
-      }
-      .lang-option {
-          padding: 10px 12px;
-          border: none;
-          background: none;
-          cursor: pointer;
-          font-size: 13px;
-          color: var(--text-primary);
-          text-align: left;
-          transition: background var(--dur-fast) var(--ease-standard);
-      }
-      .lang-option:hover {
-          background: var(--surface-2);
-      }
-      .lang-option.active {
-          background: var(--md-primary-soft);
-          color: var(--md-on-primary-soft);
-          font-weight: 600;
-      }
-
-      /* ============================================================
-         HERO
-         ============================================================ */
-      .container { max-width: var(--max-w); margin: 0 auto; padding: 0 var(--gutter); }
-      .hero { padding: 48px 0 32px; text-align: center; }
-      .avatar-wrap { display: inline-flex; margin-bottom: 20px; }
-      .avatar {
-          width: 80px; height: 80px;
-          border-radius: var(--r-full);
-          background: linear-gradient(135deg, var(--brand-400) 0%, var(--brand-600) 50%, #ec4899 100%);
-          display: flex; align-items: center; justify-content: center;
-          color: white; font-size: 32px; font-weight: 800;
-          font-family: 'Plus Jakarta Sans', sans-serif;
-          box-shadow: 0 8px 24px rgba(99, 102, 241, .35);
-          position: relative;
-      }
-      .avatar::after {
-          content: ''; position: absolute; inset: -4px;
-          border-radius: var(--r-full);
-          border: 2px solid color-mix(in srgb, var(--md-primary) 30%, transparent);
-      }
-      .hero-eyebrow {
-          display: inline-block; padding: 4px 12px;
-          background: var(--md-primary-soft);
-          color: var(--md-on-primary-soft);
-          border-radius: var(--r-full);
-          font-size: 11px; font-weight: 600; letter-spacing: 0.05em;
-          text-transform: uppercase; margin-bottom: 16px;
-      }
-      .hero h1 {
-          font-size: clamp(28px, 5vw, 40px);
-          font-weight: 800; color: var(--text-primary);
-          margin-bottom: 12px; letter-spacing: -0.03em;
-      }
-      .hero p {
-          font-size: 16px; color: var(--text-secondary);
-          max-width: 520px; margin: 0 auto;
-      }
-      .trust-row {
-          display: flex; justify-content: center; flex-wrap: wrap; gap: 8px;
-      }
-      .trust-chip {
-          display: inline-flex; align-items: center; gap: 6px;
-          padding: 6px 12px;
-          background: var(--surface);
-          border: 1px solid var(--border);
-          border-radius: var(--r-full);
-          font-size: 12px; font-weight: 500; color: var(--text-secondary);
-      }
-      .trust-chip svg { width: 14px; height: 14px; }
-
-      /* ============================================================
-         SEARCH
-         ============================================================ */
-      .search-wrap { margin: 0 0 32px; }
-      .search { position: relative; max-width: 480px; margin: 0 auto; }
+      /* ─────────────── Search ─────────────── */
+      .search { position: relative; }
+      .search svg { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); width: 18px; height: 18px; fill: none; stroke: var(--label-2); stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; pointer-events: none; }
       .search input {
-          width: 100%;
-          padding: 14px 16px 14px 44px;
-          background: var(--surface);
-          border: 1px solid var(--border);
-          border-radius: var(--r-full);
-          font-size: 14px; font-family: inherit; color: var(--text-primary);
-          transition: all var(--dur) var(--ease-out);
-          box-shadow: var(--elev-1);
+        width: 100%; height: 44px; padding: 0 40px 0 38px; border: 0; border-radius: 14px;
+        background: var(--field-bg); font-size: 16px; outline: none; transition: box-shadow 0.2s;
       }
-      .search input::placeholder { color: var(--text-tertiary); }
-      .search input:focus {
-          outline: none;
-          border-color: var(--md-primary);
-          box-shadow: 0 0 0 4px color-mix(in srgb, var(--md-primary) 15%, transparent);
-      }
-      .search-icon {
-          position: absolute; left: 16px; top: 50%;
-          transform: translateY(-50%);
-          color: var(--text-tertiary); pointer-events: none;
-      }
-      .search-icon svg { width: 18px; height: 18px; }
+      .search input::placeholder { color: var(--label-2); }
+      .search input:focus { box-shadow: 0 0 0 3px var(--tint-bg); }
+      .search .clear { position: absolute; right: 8px; top: 50%; transform: translateY(-50%); width: 28px; height: 28px; border-radius: 50%; display: none; place-items: center; color: var(--label-2); }
+      .search .clear svg { position: static; transform: none; width: 14px; height: 14px; stroke: currentColor; }
+      .search.has-value .clear { display: grid; }
 
-      /* ============================================================
-         SECTIONS
-         ============================================================ */
-      .section {
-          background: var(--surface);
-          border: 1px solid var(--border);
-          border-radius: var(--r-xl);
-          padding: 28px; margin-bottom: 20px;
-          box-shadow: var(--elev-1);
-          transition: all var(--dur-slow) var(--ease-spring);
-      }
-      .section:hover { box-shadow: var(--elev-2); }
-      .section-head {
-          display: flex; align-items: center; gap: 14px;
-          margin-bottom: 22px;
-      }
-      .section-icon {
-          width: 44px; height: 44px;
-          border-radius: var(--r-md);
-          display: flex; align-items: center; justify-content: center;
-          color: white; flex-shrink: 0;
-          font-size: 20px;
-          box-shadow: var(--elev-2);
-      }
-      .section-icon.bank     { background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%); }
-      .section-icon.ewallet  { background: linear-gradient(135deg, #ec4899 0%, #be185d 100%); }
-      .section-icon.crypto   { background: linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%); }
-      .section-meta { flex: 1; min-width: 0; }
-      .section-title {
-          font-size: 18px; font-weight: 700; color: var(--text-primary);
-          margin-bottom: 2px;
-      }
-      .section-sub {
-          font-size: 12px; color: var(--text-tertiary);
-          font-weight: 500;
-      }
-      .section-count {
-          font-size: 11px; font-weight: 600;
-          padding: 4px 10px;
-          background: var(--md-primary-soft);
-          color: var(--md-on-primary-soft);
-          border-radius: var(--r-full);
-          letter-spacing: 0.02em;
-      }
-
-      /* ============================================================
-         PAYMENT CARDS
-         ============================================================ */
-      .pay-grid {
-          display: grid;
-          grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-          gap: 12px;
-      }
-      .section[data-section="bank"] .pay-grid,
-      .section[data-section="ewallet"] .pay-grid {
-          grid-template-columns: repeat(2, 1fr);
-      }
-      .section[data-section="konfirmasi"] .pay-grid {
-          display: flex;
-          justify-content: center;
-          gap: 12px;
-          max-width: 600px;
-          margin: 0 auto;
-      }
-      @media (max-width: 768px) {
-          .section[data-section="bank"] .pay-grid,
-          .section[data-section="ewallet"] .pay-grid {
-              grid-template-columns: 1fr;
-          }
-          .section[data-section="konfirmasi"] .pay-grid {
-              flex-direction: column;
-              align-items: center;
-          }
-      }
-      .section[data-section="crypto"] .pay-grid {
-          grid-template-columns: repeat(4, 1fr);
-      }
-      @media (max-width: 1024px) {
-          .section[data-section="crypto"] .pay-grid {
-              grid-template-columns: repeat(2, 1fr);
-          }
-      }
-      @media (max-width: 768px) {
-          .section[data-section="crypto"] .pay-grid {
-              grid-template-columns: 1fr;
-          }
-      }
-      .payment-methods-wrapper {
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          gap: 32px;
-          margin-bottom: 32px;
-      }
-      .payment-methods-wrapper .section {
-          margin: 0;
-      }
-      @media (max-width: 1024px) {
-          .payment-methods-wrapper {
-              grid-template-columns: 1fr;
-              gap: 24px;
-          }
-      }
-      .pay-card {
-          display: flex; align-items: center; gap: 14px;
-          padding: 14px;
-          background: var(--surface-2);
-          border: 1px solid var(--border);
-          border-radius: var(--r-lg);
-          cursor: pointer;
-          transition: all var(--dur) var(--ease-spring);
-          text-align: left; width: 100%;
-          font-family: inherit; color: inherit;
-      }
-      .pay-card:hover {
-          background: var(--surface);
-          border-color: var(--md-primary);
-          transform: translateY(-2px);
-          box-shadow: var(--elev-3);
-      }
-      .pay-card:focus-visible {
-          outline: none;
-          border-color: var(--md-primary);
-          box-shadow: 0 0 0 3px color-mix(in srgb, var(--md-primary) 25%, transparent);
-      }
-      .pay-logo {
-          width: 44px; height: 44px;
-          border-radius: var(--r-md);
-          display: flex; align-items: center; justify-content: center;
-          color: white; font-weight: 800; font-size: 13px;
-          flex-shrink: 0; letter-spacing: -0.02em;
-          box-shadow: var(--elev-1);
-          font-family: 'Plus Jakarta Sans', sans-serif;
-      }
-      .pay-logo.crypto { font-size: 22px; font-family: 'Inter', sans-serif; }
-      .pay-body { flex: 1; min-width: 0; }
-      .pay-name {
-          font-size: 14px; font-weight: 600; color: var(--text-primary);
-          margin-bottom: 2px; line-height: 1.3;
-      }
-      .pay-num {
-          font-family: 'JetBrains Mono', monospace;
-          font-size: 12px; color: var(--text-secondary);
-          overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
-          letter-spacing: -0.01em;
-      }
-      .pay-copy {
-          width: 36px; height: 36px;
-          border-radius: var(--r-md);
-          background: var(--md-primary-soft);
-          color: var(--md-primary);
-          border: none;
-          display: flex; align-items: center; justify-content: center;
-          flex-shrink: 0;
-          transition: all var(--dur) var(--ease-out);
-      }
-      .pay-copy:hover {
-          background: var(--md-primary);
-          color: var(--md-on-primary);
-          transform: scale(1.08);
-      }
-      .pay-copy svg { width: 16px; height: 16px; }
-      .pay-copy:focus, .pay-copy:focus-visible {
-          outline: none;
-          box-shadow: none;
-      }
-      @media (hover: none) and (pointer: coarse) {
-          .pay-card:focus-visible {
-              box-shadow: none;
-              border-color: var(--border);
-          }
-          .pay-card, .pay-copy, .snack-close {
-              -webkit-tap-highlight-color: transparent;
-          }
-      }
-
-      /* Brand method colors — flat per spec */
-      .pay-logo.nobu      { background: var(--nobu); }
-      .pay-logo.seabank   { background: var(--seabank); }
-      .pay-logo.krom      { background: var(--krom); }
-      .pay-logo.jago      { background: var(--jago); }
-      .pay-logo.superbank { background: var(--superbank); }
-      .pay-logo.dana      { background: var(--dana); }
-      .pay-logo.gopay     { background: var(--gopay); }
-      .pay-logo.ovo       { background: var(--ovo); }
-      .pay-logo.shopeepay { background: var(--shopeepay); }
-      .pay-logo.eth       { background: linear-gradient(135deg, #627eea 0%, #3c5bdd 100%); }
-      .pay-logo.usdt      { background: linear-gradient(135deg, #26a17b 0%, #1a8060 100%); }
-      .pay-logo.telegram  { background: linear-gradient(135deg, #0088cc 0%, #005c99 100%); }
-      .pay-logo.whatsapp { background: linear-gradient(135deg, #25d366 0%, #128c7e 100%); }
-
-      .section-icon.telegram    { background: linear-gradient(135deg, #0088cc 0%, #005c99 100%); }
-      .section-icon.konfirmasi  { background: linear-gradient(135deg, #4f46e5 0%, #312e81 100%); }
-      .pay-logo.btc       { background: linear-gradient(135deg, #f7931a 0%, #c97615 100%); }
-      .pay-logo.sol       { background: linear-gradient(135deg, #14f195 0%, #9945ff 100%); }
-
-      .empty {
-          text-align: center; padding: 40px 20px;
-          color: var(--text-tertiary); font-size: 14px;
-      }
-      .empty svg {
-          width: 48px; height: 48px; margin-bottom: 12px;
-          color: var(--text-tertiary); opacity: 0.6;
-      }
+      /* ─────────────── Grouped lists ─────────────── */
+      .grid-2 { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 14px; align-items: start; }
+      .grid-2 .row-action .lbl { display: none; }
+      .grid-2 .row-action { width: 34px; padding: 0; justify-content: center; }
+      .grid-2 .row-action svg { width: 16px; height: 16px; }
+      .section { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
       .section.hidden { display: none; }
+      .section-head { display: flex; justify-content: space-between; align-items: baseline; padding: 0 14px; gap: 8px; }
+      .section-title { font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.4px; color: var(--label-2); }
+      .section-count { font-size: 12px; color: var(--label-3); font-weight: 600; white-space: nowrap; }
+      .group {
+        list-style: none; background: var(--card); border: 1px solid var(--card-border); border-radius: var(--r-card);
+        box-shadow: var(--shadow); overflow: hidden; min-width: 0;
+        backdrop-filter: blur(20px) saturate(160%); -webkit-backdrop-filter: blur(20px) saturate(160%);
+      }
+      .row {
+        position: relative; width: 100%; text-align: left; display: flex; align-items: center; gap: 12px;
+        min-height: 60px; padding: 10px 12px 10px 14px; transition: background-color 0.15s;
+      }
+      .row.hidden { display: none; }
+      .row:not(:last-child)::after { content: ""; position: absolute; left: 66px; right: 0; bottom: 0; height: 1px; background: var(--separator); }
+      .row:active, .row.pressed { background: var(--row-press); }
+      @media (hover: hover) {
+        .row:hover { background: var(--row-press); }
+        .row:hover .app-icon { transform: scale(1.08) rotate(-3deg); }
+        .row:hover .chevron { transform: translateX(3px); color: var(--tint); }
+      }
+      .app-icon {
+        width: 40px; height: 40px; flex-shrink: 0; border-radius: var(--r-icon); display: grid; place-items: center;
+        background: var(--c, #8e8e93); color: #fff; font-size: 13px; font-weight: 800; letter-spacing: 0.3px;
+        box-shadow: inset 0 -2px 4px rgba(0,0,0,0.12), inset 0 1px 0 rgba(255,255,255,0.18);
+        transition: transform 0.25s var(--ease);
+      }
+      .app-icon.sym { font-size: 20px; font-weight: 700; }
+      .app-icon { position: relative; overflow: hidden; }
+      .app-icon img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; background: var(--imgbg, #fff); transform: scale(var(--imgscale, 1)); }
+      .app-icon.sym img { object-fit: contain; padding: 5px; background: var(--imgbg, #fff); }
+      .app-icon svg { width: 22px; height: 22px; fill: currentColor; }
+      .is-dark .app-icon { box-shadow: inset 0 -2px 4px rgba(0,0,0,0.12), inset 0 1px 0 rgba(255,255,255,0.18), 0 0 0 1px rgba(255,255,255,0.12); }
+      .row-text { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+      .row-title { font-size: 16px; font-weight: 600; letter-spacing: -0.1px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+      .row-sub { font-size: 13px; color: var(--label-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-family: var(--mono); font-variant-numeric: tabular-nums; }
+      .row-sub.plain { font-family: var(--font); }
+      .chevron { width: 16px; height: 16px; color: var(--label-3); flex-shrink: 0; fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; transition: transform 0.25s var(--ease), color 0.25s; }
+      .row-action {
+        height: 32px; padding: 0 12px; border-radius: 999px; flex-shrink: 0; background: var(--tint-bg); color: var(--tint);
+        font-size: 13px; font-weight: 600; display: inline-flex; align-items: center; gap: 5px; transition: transform 0.2s var(--ease);
+      }
+      .row-action:active { transform: scale(0.92); }
+      .row-action svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+      .net { font-size: 10px; font-weight: 700; padding: 1px 6px; border-radius: 999px; background: var(--seg-bg); color: var(--label-2); margin-left: 6px; vertical-align: middle; font-family: var(--font); }
 
-      /* ============================================================
-         HOW-TO
-         ============================================================ */
-      .how-to {
-          background: var(--surface);
-          border: 1px solid var(--border);
-          border-radius: var(--r-xl);
-          padding: 28px; margin-bottom: 20px;
-          box-shadow: var(--elev-1);
-      }
-      .how-to h3 { font-size: 18px; font-weight: 700; margin-bottom: 4px; }
-      .how-to-sub { font-size: 13px; color: var(--text-secondary); margin-bottom: 20px; }
-      .steps {
-          display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-          gap: 16px;
-      }
-      .step { display: flex; gap: 12px; }
-      .step-num {
-          width: 28px; height: 28px;
-          border-radius: var(--r-full);
-          background: var(--md-primary-soft);
-          color: var(--md-primary);
-          display: flex; align-items: center; justify-content: center;
-          font-weight: 700; font-size: 13px; flex-shrink: 0;
-          font-family: 'Plus Jakarta Sans', sans-serif;
-      }
-      .step-content h4 {
-          font-size: 14px; font-weight: 600; margin-bottom: 4px;
-          color: var(--text-primary); font-family: 'Inter', sans-serif;
-      }
-      .step-content p {
-          font-size: 12px; color: var(--text-secondary); line-height: 1.5;
-      }
+      /* Steps */
+      .step-num { width: 32px; height: 32px; border-radius: 50%; background: var(--tint-bg); color: var(--tint); font-weight: 800; font-size: 14px; display: grid; place-items: center; flex-shrink: 0; }
+      .row.static { cursor: default; }
+      .row.static:hover, .row.static:active { background: transparent; }
+      .row-sub.wrap { white-space: normal; font-family: var(--font); line-height: 1.4; }
 
-      /* ============================================================
-         FOOTER
-         ============================================================ */
-      .footer {
-          text-align: center; padding: 32px 0 24px;
-          color: var(--text-tertiary); font-size: 12px;
-      }
-      .footer-meta {
-          display: flex; justify-content: center; gap: 16px;
-          flex-wrap: wrap; margin-bottom: 8px; font-weight: 500;
-      }
-      .footer-meta span { display: inline-flex; align-items: center; gap: 4px; }
+      /* Warning card */
+      .warn { display: flex; gap: 10px; align-items: flex-start; padding: 12px 14px; border-radius: 16px; background: var(--orange-bg); color: var(--orange-text); font-size: 13px; line-height: 1.45; font-weight: 500; }
+      .warn svg { width: 18px; height: 18px; flex-shrink: 0; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; margin-top: 1px; }
 
-      /* (FAB WhatsApp removed — replaced by WhatsApp card in Konfirmasi Pembayaran section) */
+      /* CTA */
+      .cta-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+      .cta { display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 50px; border-radius: 16px; background: var(--c); color: #fff; font-size: 16px; font-weight: 600; box-shadow: 0 6px 18px color-mix(in srgb, var(--c) 35%, transparent); transition: transform 0.2s var(--ease), filter 0.2s; }
+      .cta:active { transform: scale(0.96); filter: brightness(0.92); }
+      @media (hover: hover) { .cta:hover { transform: translateY(-2px); filter: brightness(1.05); } }
+      .cta svg { width: 20px; height: 20px; fill: currentColor; }
 
-      /* ============================================================
-         MODAL
-         ============================================================ */
-      .modal-overlay {
-          position: fixed; inset: 0;
-          background: rgba(15, 23, 42, 0.6);
-          backdrop-filter: blur(8px);
-          -webkit-backdrop-filter: blur(8px);
-          z-index: 200;
-          display: none; align-items: center; justify-content: center;
-          padding: 20px;
-          opacity: 0;
-          transition: opacity var(--dur) var(--ease-out);
-      }
-      .modal-overlay.active { display: flex; opacity: 1; }
-      .modal {
-          background: var(--surface);
-          border: 1px solid var(--border);
-          border-radius: var(--r-2xl);
-          box-shadow: var(--elev-5);
-          max-width: 480px; width: 100%;
-          overflow: hidden;
-          transform: scale(0.95) translateY(8px);
-          transition: transform var(--dur-slow) var(--ease-spring);
-      }
-      .modal-overlay.active .modal { transform: scale(1) translateY(0); }
+      /* Segmented */
+      .seg { position: relative; display: grid; grid-template-columns: repeat(3, 1fr); padding: 2px; border-radius: 10px; background: var(--seg-bg); }
+      .seg-thumb { position: absolute; top: 2px; bottom: 2px; left: 2px; width: calc((100% - 4px) / 3); border-radius: 8px; background: var(--seg-thumb); box-shadow: 0 2px 6px rgba(0,0,0,0.12), 0 0 0 0.5px rgba(0,0,0,0.04); transform: translateX(calc(var(--i, 1) * 100%)); transition: transform 0.3s var(--ease); }
+      .seg button { position: relative; z-index: 1; height: 30px; border-radius: 8px; font-size: 13px; font-weight: 600; color: var(--label-2); display: inline-flex; align-items: center; justify-content: center; gap: 5px; transition: color 0.2s; }
+      .seg button[aria-pressed="true"] { color: var(--label); }
+      .seg svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
 
-      .modal-header {
-          padding: 24px 24px 0;
-          display: flex; align-items: center; gap: 14px;
-      }
-      .modal-logo {
-          width: 48px; height: 48px;
-          border-radius: var(--r-md);
-          display: flex; align-items: center; justify-content: center;
-          color: white; font-weight: 800; font-size: 14px;
-          box-shadow: var(--elev-2);
-          flex-shrink: 0;
-          font-family: 'Plus Jakarta Sans', sans-serif;
-          background: linear-gradient(135deg, #6750a4 0%, #625b71 100%);
-      }
-      .modal-logo.nobu       { background: var(--nobu); }
-      .modal-logo.seabank    { background: var(--seabank); }
-      .modal-logo.krom       { background: var(--krom); }
-      .modal-logo.jago       { background: var(--jago); }
-      .modal-logo.superbank  { background: var(--superbank); }
-      .modal-logo.dana       { background: var(--dana); }
-      .modal-logo.gopay      { background: var(--gopay); }
-      .modal-logo.ovo        { background: var(--ovo); }
-      .modal-logo.shopeepay  { background: var(--shopeepay); }
-      .modal-logo.eth        { background: linear-gradient(135deg, #627eea 0%, #3c5bdd 100%); }
-      .modal-logo.usdt       { background: linear-gradient(135deg, #26a17b 0%, #1a8060 100%); }
-      .modal-logo.btc        { background: linear-gradient(135deg, #f7931a 0%, #c97615 100%); }
-      .modal-logo.sol        { background: linear-gradient(135deg, #14f195 0%, #9945ff 100%); }
-      .modal-logo.telegram   { background: linear-gradient(135deg, #0088cc 0%, #005c99 100%); }
-      .modal-logo.whatsapp   { background: linear-gradient(135deg, #25d366 0%, #128c7e 100%); }
-      .modal-logo.crypto { font-size: 22px; font-family: 'Inter', sans-serif; }
-      .modal-title-block { flex: 1; min-width: 0; }
-      .modal-cat {
-          font-size: 11px; font-weight: 600;
-          color: var(--text-tertiary);
-          text-transform: uppercase;
-          letter-spacing: 0.05em; margin-bottom: 2px;
-      }
-      .modal-name {
-          font-size: 18px; font-weight: 700;
-          color: var(--text-primary);
-          font-family: 'Plus Jakarta Sans', sans-serif;
-      }
-      .modal-close {
-          width: 32px; height: 32px;
-          border-radius: var(--r-md);
-          background: var(--surface-2);
-          border: 1px solid var(--border);
-          color: var(--text-secondary);
-          cursor: pointer;
-          display: flex; align-items: center; justify-content: center;
-          transition: all var(--dur) var(--ease-out);
-      }
-      .modal-close:hover {
-          background: var(--error); color: white; border-color: var(--error);
-      }
-      .modal-close svg { width: 16px; height: 16px; }
-      .modal-body { padding: 20px 24px; }
-      .modal-info {
-          display: flex; justify-content: space-between; align-items: center;
-          padding: 14px 0;
-          border-bottom: 1px solid var(--border);
-      }
-      .modal-info:last-of-type { border-bottom: none; }
-      .modal-label { font-size: 12px; color: var(--text-tertiary); font-weight: 500; }
-      .modal-value {
-          font-size: 14px; color: var(--text-primary);
-          font-weight: 600;
-          font-family: 'JetBrains Mono', monospace;
-          text-align: right; word-break: break-all;
-      }
-      .modal-value.name {
-          font-family: 'Plus Jakarta Sans', sans-serif;
-          text-transform: uppercase; letter-spacing: 0.02em;
-      }
-      .modal-warning {
-          display: flex; gap: 10px;
-          padding: 12px 14px;
-          background: color-mix(in srgb, var(--warning) 10%, transparent);
-          border: 1px solid color-mix(in srgb, var(--warning) 25%, transparent);
-          border-radius: var(--r-md);
-          margin-top: 16px;
-      }
-      .modal-warning-icon { color: var(--warning); flex-shrink: 0; padding-top: 2px; }
-      .modal-warning-icon svg { width: 18px; height: 18px; }
-      .modal-warning-text {
-          font-size: 12px; color: var(--text-secondary); line-height: 1.5;
-      }
-      .modal-actions {
-          display: flex; gap: 10px;
-          padding: 16px 24px 24px;
-      }
-      .btn {
-          flex: 1; padding: 12px 18px;
-          border-radius: var(--r-md);
-          border: 1px solid transparent;
-          font-weight: 600; font-size: 14px; font-family: inherit;
-          cursor: pointer;
-          transition: all var(--dur) var(--ease-out);
-          display: inline-flex; align-items: center; justify-content: center; gap: 6px;
-      }
-      .btn-secondary {
-          background: var(--surface-2);
-          color: var(--text-primary);
-          border-color: var(--border);
-      }
-      .btn-secondary:hover {
-          background: var(--surface);
-          border-color: var(--border-strong);
-      }
-      .btn-primary {
-          background: var(--md-primary);
-          color: var(--md-on-primary);
-          box-shadow: 0 4px 12px color-mix(in srgb, var(--md-primary) 35%, transparent);
-      }
-      .btn-primary:hover {
-          background: var(--md-primary-hover);
-          transform: translateY(-1px);
-          box-shadow: 0 6px 16px color-mix(in srgb, var(--md-primary) 45%, transparent);
-      }
-      .btn-primary svg, .btn-secondary svg { width: 16px; height: 16px; }
+      .footer { text-align: center; font-size: 12px; color: var(--label-2); line-height: 1.6; }
+      .footer a { color: var(--tint); font-weight: 600; }
 
-      /* ============================================================
-         SNACKBAR
-         ============================================================ */
-      .snack-host {
-          position: fixed; left: 50%; bottom: 96px;
-          transform: translateX(-50%); z-index: 300;
-          display: flex; flex-direction: column; gap: 8px;
-          pointer-events: none; max-width: 92vw;
+      /* ─────────────── Detail sheet ─────────────── */
+      .sheet-backdrop { position: fixed; inset: 0; z-index: 30; background: rgba(0,0,0,0.4); opacity: 0; pointer-events: none; transition: opacity 0.3s; }
+      .sheet-backdrop.open { opacity: 1; pointer-events: auto; }
+      .sheet {
+        position: fixed; left: 50%; bottom: 0; z-index: 31; width: 100%; max-width: 480px;
+        transform: translate(-50%, 110%); visibility: hidden;
+        background: var(--card); border: 1px solid var(--card-border); border-radius: 24px 24px 0 0;
+        padding: 10px 20px max(24px, env(safe-area-inset-bottom)); box-shadow: 0 -10px 40px rgba(0,0,0,0.2);
+        transition: transform 0.45s var(--ease), visibility 0s 0.45s;
+        backdrop-filter: blur(20px) saturate(160%); -webkit-backdrop-filter: blur(20px) saturate(160%);
+        max-height: 92dvh; overflow-y: auto;
       }
-      .snack {
-          background: var(--slate-900); color: var(--slate-0);
-          border-radius: var(--r-md);
-          padding: 12px 14px;
-          display: flex; align-items: center; gap: 10px;
-          font-size: 13px; font-weight: 500;
-          box-shadow: var(--elev-4);
-          pointer-events: auto;
-          min-width: 240px; max-width: 360px;
-          transform: translateY(20px); opacity: 0;
-          transition: all var(--dur) var(--ease-spring);
-      }
-      .snack.show { transform: translateY(0); opacity: 1; }
-      .snack.success { background: var(--success); }
-      .snack.error   { background: var(--error); }
-      .snack-icon { flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
-      .snack-icon svg { width: 18px; height: 18px; }
-      .snack-text { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; }
-      .snack-close {
-          background: transparent; border: none; color: inherit;
-          opacity: 0.7; cursor: pointer; padding: 2px;
-          display: flex;
-      }
-      .snack-close:hover { opacity: 1; }
-      .snack-close:focus, .snack-close:focus-visible {
-          outline: none;
-          box-shadow: none;
-      }
-      .snack:focus, .snack:focus-within {
-          outline: none;
-          box-shadow: none;
-      }
-      .snack-close svg { width: 14px; height: 14px; }
-
-      .force-disable {
-          -webkit-user-select: none;
-          -webkit-touch-callout: none;
-          -moz-user-select: none;
-          -ms-user-select: none;
-          user-select: none;
+      .sheet.open { transform: translate(-50%, 0); visibility: visible; transition-delay: 0s; }
+      .grabber { width: 36px; height: 5px; border-radius: 3px; background: var(--label-3); margin: 0 auto 16px; }
+      .sheet-head { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+      .sheet-head .app-icon { width: 48px; height: 48px; border-radius: 13px; font-size: 15px; }
+      .sheet-head .app-icon.sym { font-size: 24px; }
+      .sheet-cat { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.4px; color: var(--label-2); }
+      .sheet-name { font-size: 18px; font-weight: 700; }
+      .kv { list-style: none; background: var(--seg-bg); border-radius: 16px; overflow: hidden; margin-bottom: 12px; }
+      .kv li { display: flex; flex-direction: column; gap: 3px; padding: 11px 14px; }
+      .kv li + li { border-top: 1px solid var(--separator); }
+      .kv li.with-action { flex-direction: row; align-items: center; justify-content: space-between; gap: 10px; }
+      .kv li.with-action > span { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+      .kv .k { font-size: 12px; color: var(--label-2); font-weight: 600; }
+      .kv .v { font-size: 15px; font-weight: 600; word-break: break-all; }
+      .kv .v.num { font-family: var(--mono); font-size: 17px; letter-spacing: 0.5px; }
+      .kv .v.addr { font-family: var(--mono); font-size: 13px; }
+      .sheet .actions { display: grid; gap: 10px; margin-top: 14px; }
+      .btn { height: 48px; border-radius: 14px; font-size: 16px; font-weight: 600; display: inline-flex; align-items: center; justify-content: center; gap: 8px; background: var(--seg-bg); color: var(--label); transition: transform 0.2s var(--ease); }
+      .btn.primary { background: var(--tint); color: #fff; }
+      .btn.wa { background: var(--wa); color: #fff; }
+      .btn.tg { background: var(--tg); color: #fff; }
+      .btn svg.brand { fill: currentColor; stroke: none; width: 20px; height: 20px; }
+      .sheet-cap { font-size: 12px; font-weight: 600; color: var(--label-2); text-align: center; margin-top: 2px; }
+      .confirm-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+      .btn:active { transform: scale(0.97); }
+      .btn svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+      @media (min-width: 720px) {
+        .sheet { bottom: auto; top: 50%; transform: translate(-50%, -40%) scale(0.96); opacity: 0; border-radius: 24px; max-width: 420px; pointer-events: none; transition: transform 0.35s var(--ease), opacity 0.25s, visibility 0s 0.35s; }
+        .sheet.open { transform: translate(-50%, -50%) scale(1); opacity: 1; pointer-events: auto; transition-delay: 0s; }
+        .grabber { display: none; }
       }
 
-      /* ============================================================
-         RESPONSIVE
-         ============================================================ */
-      @media (max-width: 640px) {
-          :root { --gutter: 16px; }
-          .hero { padding: 32px 0 24px; }
-          .section, .how-to { padding: 20px; }
-          .section-head { margin-bottom: 16px; }
-          .pay-grid { grid-template-columns: 1fr; }
-          .steps { grid-template-columns: 1fr; }
-          .modal-header { padding: 20px 20px 0; }
-          .modal-body { padding: 16px 20px; }
-          .modal-actions { padding: 12px 20px 20px; }
-          .header-inner { padding: 12px var(--gutter); }
+      /* Toast */
+      .toast { position: fixed; left: 50%; top: max(16px, env(safe-area-inset-top)); z-index: 40; transform: translate(-50%, -24px) scale(0.96); opacity: 0; pointer-events: none; display: inline-flex; align-items: center; gap: 8px; padding: 10px 16px; border-radius: 999px; background: var(--toast-bg); color: var(--toast-fg); font-size: 14px; font-weight: 600; box-shadow: 0 10px 30px rgba(0,0,0,0.25); transition: transform 0.4s var(--ease), opacity 0.25s; max-width: calc(100% - 32px); }
+      .toast.show { transform: translate(-50%, 0) scale(1); opacity: 1; }
+      .toast svg { width: 16px; height: 16px; flex-shrink: 0; fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+
+      /* ─────────────── Responsive / a11y ─────────────── */
+      @media (max-width: 560px) {
+        .grid-2 { grid-template-columns: 1fr; }
+        .app { max-width: 460px; }
       }
+      @media (max-width: 400px) {
+        .row-action .lbl { display: none; }
+        .row-action { width: 34px; padding: 0; justify-content: center; }
+        .row-action svg { width: 16px; height: 16px; }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+        .in { opacity: 1; transform: none; }
+      }
+      @supports not (backdrop-filter: blur(1px)) { .group, .sheet { background: color-mix(in srgb, var(--card) 100%, var(--bg) 30%); } }
     </style>
   </head>
-  <body class="force-disable">
-    <header class="header">
-      <div class="header-inner">
-        <a href="#" class="brand">
-          <div class="brand-mark">
-            <img
-              src="https://avatars.githubusercontent.com/u/40856427?v=4"
-              alt="officialputuid"
-              width="36"
-              height="36"
-              loading="eager"
-            />
-          </div>
-          <div class="brand-text">
-            <span class="brand-name">officialputuid</span>
-            <span class="brand-sub">Payment Info</span>
-          </div>
-        </a>
-        <div class="header-actions">
-          <div class="lang-selector">
-            <button class="lang-btn" id="langBtn" aria-label="Select language" title="Select language">
-              <span id="langLabel">ID</span>
-            </button>
-            <div class="lang-menu" id="langMenu">
-              <button class="lang-option" data-lang="id">🇮🇩 Indonesia</button>
-              <button class="lang-option" data-lang="en">🇺🇸 English</button>
-            </div>
-          </div>
-          <button class="icon-btn" id="themeBtn" aria-label="Toggle theme" title="Toggle theme">
-            <svg
-              id="themeIcon"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            >
-              <circle cx="12" cy="12" r="4" />
-              <path
-                d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"
-              />
-            </svg>
-          </button>
-        </div>
-      </div>
-    </header>
 
-    <main class="container">
-      <section class="hero">
-        <span class="hero-eyebrow" data-i18n="hero-eyebrow">Payment Info</span>
-        <h1 data-i18n="hero-title">
-          Halo, terima kasih sudah
-          <span class="highlight-flash">'confiar'</span>
-          di saya 👋
-        </h1>
-        <p class="hero-sub" data-i18n="hero-sub">
-          Pilih metode pembayaran favorit kamu dibawah,
-          <br />
-          Jangan lupa konfirmasi ya!
-        </p>
-      </section>
+  <body>
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+      <symbol id="i-chevron" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></symbol>
+      <symbol id="i-copy" viewBox="0 0 24 24"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 012-2h10"/></symbol>
+      <symbol id="i-whatsapp" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></symbol>
+      <symbol id="i-telegram" viewBox="0 0 24 24"><path d="M11.944 0A12 12 0 000 12a12 12 0 0012 12 12 12 0 0012-12A12 12 0 0012.056 0h-.112zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 01.171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.064-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.479.33-.913.492-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></symbol>
+    </svg>
 
-      <div class="search-wrap">
-        <div class="search">
-          <span class="search-icon">
-            <svg
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            >
-              <circle cx="11" cy="11" r="8" />
-              <path d="m21 21-4.3-4.3" />
-            </svg>
-          </span>
-          <input
-            type="text"
-            id="searchInput"
-            placeholder="Cari bank, e-wallet, crypto, atau channel..."
-            autocomplete="off"
-          />
-        </div>
+    <main class="app">
+      <nav class="nav in" style="--d: 0ms">
+        <a class="nav-btn" href="https://officialputuid.dpdns.org"><svg viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg><span class="lbl">officialputuid.dpdns.org</span></a>
+        <button class="nav-btn lang" id="langBtn" type="button" aria-label="Switch language">EN</button>
+      </nav>
+
+      <div class="urlcheck in" id="urlcheck" style="--d: 20ms">
+        <svg viewBox="0 0 24 24"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>
+        <span><span data-i18n="urlCheck">Alamat resmi hanya:</span> <b>payment.officialputuid.dpdns.org</b></span>
+        <span class="urlstate" id="urlstate"></span>
       </div>
 
-      <!-- TRANSFER BANK & E-WALLET (2-COLUMN LAYOUT) -->
-      <div class="payment-methods-wrapper">
-        <!-- TRANSFER BANK -->
-        <section class="section" data-section="bank" data-search="transfer bank nobu seabank krom jago superbank">
-          <div class="section-head">
-            <div class="section-icon bank">
-              <svg
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                width="22"
-                height="22"
-              >
-                <path d="m3 21 18 0" />
-                <path d="M5 21V7l7-4 7 4v14" />
-                <path d="M9 9v.01" />
-                <path d="M9 13v.01" />
-                <path d="M9 17v.01" />
-                <path d="M15 9v.01" />
-                <path d="M15 13v.01" />
-                <path d="M15 17v.01" />
-              </svg>
-            </div>
-            <div class="section-meta">
-              <h3 class="section-title" data-i18n="bank-title">Transfer Bank</h3>
-              <p class="section-sub" data-i18n="bank-sub">A/N: I Putu Jaya Adi Pranata</p>
-            </div>
-            <span class="section-count">5 bank</span>
-          </div>
-          <div class="pay-grid">
-            <button class="pay-card" data-id="nobu-99901000116040" data-search="nobu bank">
-              <div class="pay-logo nobu">NB</div>
-              <div class="pay-body">
-                <div class="pay-name">NOBU</div>
-                <div class="pay-num">99901000116040</div>
-              </div>
-              <div class="pay-copy">
-                <svg
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
-                  <rect x="9" y="9" width="13" height="13" rx="2" />
-                  <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
-                </svg>
-              </div>
-            </button>
-            <button class="pay-card" data-id="seabank-901554870570" data-search="seabank sea bank">
-              <div class="pay-logo seabank">SB</div>
-              <div class="pay-body">
-                <div class="pay-name">SEABANK</div>
-                <div class="pay-num">901554870570</div>
-              </div>
-              <div class="pay-copy">
-                <svg
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
-                  <rect x="9" y="9" width="13" height="13" rx="2" />
-                  <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
-                </svg>
-              </div>
-            </button>
-            <button class="pay-card" data-id="krom-770009470900" data-search="krom bank">
-              <div class="pay-logo krom">KR</div>
-              <div class="pay-body">
-                <div class="pay-name">KROM</div>
-                <div class="pay-num">770009470900</div>
-              </div>
-              <div class="pay-copy">
-                <svg
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
-                  <rect x="9" y="9" width="13" height="13" rx="2" />
-                  <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
-                </svg>
-              </div>
-            </button>
-            <button class="pay-card" data-id="jago-100951020606" data-search="jago bank jago">
-              <div class="pay-logo jago">JG</div>
-              <div class="pay-body">
-                <div class="pay-name">JAGO</div>
-                <div class="pay-num">100951020606</div>
-              </div>
-              <div class="pay-copy">
-                <svg
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
-                  <rect x="9" y="9" width="13" height="13" rx="2" />
-                  <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
-                </svg>
-              </div>
-            </button>
-            <button class="pay-card" data-id="superbank-000015761968" data-search="superbank super bank">
-              <div class="pay-logo superbank">SB</div>
-              <div class="pay-body">
-                <div class="pay-name">SUPERBANK</div>
-                <div class="pay-num">000015761968</div>
-              </div>
-              <div class="pay-copy">
-                <svg
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
-                  <rect x="9" y="9" width="13" height="13" rx="2" />
-                  <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
-                </svg>
-              </div>
-            </button>
-          </div>
-          <div class="empty" style="display: none;">
-            <svg
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            >
-              <circle cx="11" cy="11" r="8" />
-              <path d="m21 21-4.3-4.3" />
-            </svg>
-            <div>Tidak ada hasil</div>
-          </div>
+      <header class="hero">
+        <div class="avatar in" style="--d: 40ms">
+          <img src="https://officialputuid.dpdns.org/assets/avatar.jpg" onerror="this.onerror=null;this.src='https://avatars.githubusercontent.com/u/40856427?v=4'" alt="officialputuid" width="86" height="86" loading="eager" decoding="async" />
+          <span class="shield" title="Verified"><svg viewBox="0 0 24 24"><path d="M5 12l5 5L20 7"/></svg></span>
+        </div>
+        <h1 class="title in" style="--d: 90ms" data-i18n="title">Payment Info</h1>
+        <p class="subtitle in" style="--d: 130ms" data-i18n="subtitle">Halo, terima kasih sudah percaya sama saya 👋 Pilih metode di bawah, lalu jangan lupa konfirmasi ya.</p>
+        <div class="chips in" style="--d: 170ms">
+          <span class="chip green"><svg viewBox="0 0 24 24"><path d="M12 2l8 3v6c0 5-3.4 9.3-8 11-4.6-1.7-8-6-8-11V5l8-3z"/><path d="M8.5 12.2l2.3 2.3 4.7-4.7"/></svg><span data-i18n="official">Official account list</span></span>
+          <span class="chip"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0116 0"/></svg>A/N I Putu Jaya Adi Pranata</span>
+        </div>
+      </header>
+
+      <div class="search in" style="--d: 210ms">
+        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.3-4.3"/></svg>
+        <input type="search" id="searchInput" autocomplete="off" placeholder="Cari bank, e-wallet, crypto…" data-i18n-ph="search" />
+        <button class="clear" id="clearSearch" type="button" aria-label="Clear"><svg viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
+      </div>
+
+      <div class="warn in" style="--d: 240ms">
+        <svg viewBox="0 0 24 24"><path d="M12 9v4M12 17h.01"/><path d="M10.3 3.9L1.8 18a2 2 0 001.7 3h17a2 2 0 001.7-3L13.7 3.9a2 2 0 00-3.4 0z"/></svg>
+        <span data-i18n="warn">Hanya rekening di halaman ini yang resmi. Pastikan nama penerima <b>I Putu Jaya Adi Pranata</b> sebelum transfer. Transaksi yang sudah dikirim tidak bisa dibatalkan.</span>
+      </div>
+
+      <div class="grid-2 in" style="--d: 280ms">
+        <section class="section" data-type="bank">
+          <div class="section-head"><h2 class="section-title" data-i18n="bank">Transfer Bank</h2><span class="section-count"></span></div>
+          <ul class="group"></ul>
         </section>
-
-        <!-- E-WALLET -->
-        <section class="section" data-section="ewallet" data-search="dana gopay ovo shopeepay e-wallet dompet">
-          <div class="section-head">
-            <div class="section-icon ewallet">
-              <svg
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                width="22"
-                height="22"
-              >
-                <rect x="2" y="5" width="20" height="14" rx="2" />
-                <path d="M2 10h20" />
-              </svg>
-            </div>
-            <div class="section-meta">
-              <h3 class="section-title" data-i18n="ewallet-title">E-Wallet</h3>
-              <p class="section-sub" data-i18n="ewallet-sub">A/N: I Putu Jaya Adi Pranata</p>
-            </div>
-            <span class="section-count">4 wallet</span>
-          </div>
-          <div class="pay-grid">
-            <button class="pay-card" data-id="dana-081237920900" data-search="dana dompet">
-              <div class="pay-logo dana">DA</div>
-              <div class="pay-body">
-                <div class="pay-name">DANA</div>
-                <div class="pay-num">081237920900</div>
-              </div>
-              <div class="pay-copy">
-                <svg
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
-                  <rect x="9" y="9" width="13" height="13" rx="2" />
-                  <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
-                </svg>
-              </div>
-            </button>
-            <button class="pay-card" data-id="gopay-081237920900" data-search="gopay go pay dompet">
-              <div class="pay-logo gopay">GP</div>
-              <div class="pay-body">
-                <div class="pay-name">GOPAY</div>
-                <div class="pay-num">081237920900</div>
-              </div>
-              <div class="pay-copy">
-                <svg
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
-                  <rect x="9" y="9" width="13" height="13" rx="2" />
-                  <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
-                </svg>
-              </div>
-            </button>
-            <button class="pay-card" data-id="ovo-081237920900" data-search="ovo dompet">
-              <div class="pay-logo ovo">OV</div>
-              <div class="pay-body">
-                <div class="pay-name">OVO</div>
-                <div class="pay-num">081237920900</div>
-              </div>
-              <div class="pay-copy">
-                <svg
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
-                  <rect x="9" y="9" width="13" height="13" rx="2" />
-                  <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
-                </svg>
-              </div>
-            </button>
-            <button class="pay-card" data-id="shopeepay-081237920900" data-search="shopeepay shopee pay dompet">
-              <div class="pay-logo shopeepay">SP</div>
-              <div class="pay-body">
-                <div class="pay-name">SHOPEEPAY</div>
-                <div class="pay-num">081237920900</div>
-              </div>
-              <div class="pay-copy">
-                <svg
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
-                  <rect x="9" y="9" width="13" height="13" rx="2" />
-                  <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
-                </svg>
-              </div>
-            </button>
-          </div>
-          <div class="empty" style="display: none;">
-            <svg
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            >
-              <circle cx="11" cy="11" r="8" />
-              <path d="m21 21-4.3-4.3" />
-            </svg>
-            <div>Tidak ada hasil</div>
-          </div>
+        <section class="section" data-type="ewallet">
+          <div class="section-head"><h2 class="section-title">E-Wallet</h2><span class="section-count"></span></div>
+          <ul class="group"></ul>
         </section>
       </div>
-      <!-- END 2-COLUMN LAYOUT -->
 
-      <!-- CRYPTO -->
-      <section
-        class="section"
-        data-section="crypto"
-        data-search="eth ethereum usdt tether btc bitcoin sol solana crypto network erc20 segwit"
-      >
-        <div class="section-head">
-          <div class="section-icon crypto">
-            <svg
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              width="22"
-              height="22"
-            >
-              <circle cx="12" cy="12" r="10" />
-              <path d="M2 12h20" />
-              <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
-            </svg>
-          </div>
-          <div class="section-meta">
-            <h3 class="section-title" data-i18n="crypto-title">Crypto</h3>
-            <p class="section-sub" data-i18n="crypto-sub">Supports: ERC-20, Bitcoin, Solana</p>
-          </div>
-          <span class="section-count">4 token</span>
-        </div>
-        <div class="pay-grid">
-          <button
-            class="pay-card"
-            data-id="eth-0x87E43692D118eb86b428c40a60Db4dF3C794bf79"
-            data-search="eth ethereum ether erc20"
-          >
-            <div class="pay-logo crypto eth">Ξ</div>
-            <div class="pay-body">
-              <div class="pay-name">ETHEREUM (ETH)</div>
-              <div class="pay-num">0x87E4...bf79</div>
-            </div>
-            <div class="pay-copy">
-              <svg
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <rect x="9" y="9" width="13" height="13" rx="2" />
-                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
-              </svg>
-            </div>
-          </button>
-          <button
-            class="pay-card"
-            data-id="usdt-0x87E43692D118eb86b428c40a60Db4dF3C794bf79"
-            data-search="usdt tether stablecoin erc20"
-          >
-            <div class="pay-logo crypto usdt">₮</div>
-            <div class="pay-body">
-              <div class="pay-name">USDT (TETHER)</div>
-              <div class="pay-num">0x87E4...bf79</div>
-            </div>
-            <div class="pay-copy">
-              <svg
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <rect x="9" y="9" width="13" height="13" rx="2" />
-                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
-              </svg>
-            </div>
-          </button>
-          <button
-            class="pay-card"
-            data-id="btc-bc1qcp77qd5a9mlq7ty7n304wgw7qv3nu2zt6yhe7g"
-            data-search="btc bitcoin segwit"
-          >
-            <div class="pay-logo crypto btc">₿</div>
-            <div class="pay-body">
-              <div class="pay-name">BITCOIN (BTC)</div>
-              <div class="pay-num">bc1qcp7...he7g</div>
-            </div>
-            <div class="pay-copy">
-              <svg
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <rect x="9" y="9" width="13" height="13" rx="2" />
-                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
-              </svg>
-            </div>
-          </button>
-          <button class="pay-card" data-id="sol-Bv84zNM5gwn4ePSxJZYZJoNbwEsBBJrWNevnhiapRs8f" data-search="sol solana">
-            <div class="pay-logo crypto sol">◎</div>
-            <div class="pay-body">
-              <div class="pay-name">SOL (SOLANA)</div>
-              <div class="pay-num">Bv84zN...pRs8f</div>
-            </div>
-            <div class="pay-copy">
-              <svg
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <rect x="9" y="9" width="13" height="13" rx="2" />
-                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
-              </svg>
-            </div>
-          </button>
-        </div>
-        <div class="empty" style="display: none;">
-          <svg
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          >
-            <circle cx="11" cy="11" r="8" />
-            <path d="m21 21-4.3-4.3" />
-          </svg>
-          <div>Tidak ada hasil</div>
+      <section class="section in" style="--d: 340ms" data-type="crypto">
+        <div class="section-head"><h2 class="section-title">Crypto</h2><span class="section-count"></span></div>
+        <ul class="group"></ul>
+      </section>
+
+      <section class="section in" style="--d: 400ms">
+        <h2 class="section-title" style="padding: 0 14px" data-i18n="confirm">Konfirmasi</h2>
+        <div class="cta-row">
+          <a href="https://wa.me/6281237920900?text=Halo%2C+saya+sudah+transfer.+Berikut+bukti+pembayarannya." class="cta" style="--c: var(--wa)" target="_blank" rel="noopener noreferrer"><svg><use href="#i-whatsapp"/></svg>WhatsApp</a>
+          <a href="https://t.me/officialputuid" class="cta" style="--c: var(--tg)" target="_blank" rel="noopener noreferrer"><svg><use href="#i-telegram"/></svg>Telegram</a>
         </div>
       </section>
 
-      <!-- KONFIRMASI PEMBAYARAN -->
-      <section
-        class="section"
-        data-section="konfirmasi"
-        data-search="konfirmasi telegram whatsapp chat t.me wa.me @officialputuid"
-      >
-        <div class="section-head">
-          <div class="section-icon konfirmasi">
-            <svg
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              width="22"
-              height="22"
-            >
-              <path
-                d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"
-              />
-            </svg>
-          </div>
-          <div class="section-meta">
-            <h3 class="section-title" data-i18n="konfirmasi-title">Konfirmasi</h3>
-            <p class="section-sub" data-i18n="konfirmasi-sub">Kirim bukti transfer disini.</p>
-          </div>
-          <span class="section-count">2 channel</span>
-        </div>
-        <div class="pay-grid">
-          <button
-            class="pay-card"
-            data-id="telegram-officialputuid"
-            data-search="telegram chat officialputuid konfirmasi t.me"
-          >
-            <div class="pay-logo telegram">TG</div>
-            <div class="pay-body">
-              <div class="pay-name">TELEGRAM</div>
-              <div class="pay-num">@officialputuid</div>
-            </div>
-            <div class="pay-copy">
-              <svg
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <path d="M22 2 11 13" />
-                <path d="M22 2 15 22l-4-9-9-4z" />
-              </svg>
-            </div>
-          </button>
-          <button
-            class="pay-card"
-            data-id="whatsapp-6281237920900"
-            data-search="whatsapp wa chat officialputuid konfirmasi wa.me"
-          >
-            <div class="pay-logo whatsapp">WA</div>
-            <div class="pay-body">
-              <div class="pay-name">WHATSAPP</div>
-              <div class="pay-num">+62 812-3792-0900</div>
-            </div>
-            <div class="pay-copy">
-              <svg
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <path d="M22 2 11 13" />
-                <path d="M22 2 15 22l-4-9-9-4z" />
-              </svg>
-            </div>
-          </button>
+      <section class="section in" style="--d: 460ms">
+        <h2 class="section-title" style="padding: 0 14px" data-i18n="howto">Cara Pembayaran</h2>
+        <ul class="group">
+          <li class="row static"><span class="step-num">1</span><span class="row-text"><span class="row-title" data-i18n="s1t">Pilih metode</span><span class="row-sub wrap" data-i18n="s1d">Tap salah satu rekening / wallet di atas untuk melihat detail dan menyalin nomornya.</span></span></li>
+          <li class="row static"><span class="step-num">2</span><span class="row-text"><span class="row-title" data-i18n="s2t">Lakukan transfer</span><span class="row-sub wrap" data-i18n="s2d">Transfer sesuai jumlah ke nomor yang tertera. Cek nama penerima sebelum mengirim.</span></span></li>
+          <li class="row static"><span class="step-num">3</span><span class="row-text"><span class="row-title" data-i18n="s3t">Konfirmasi</span><span class="row-sub wrap" data-i18n="s3d">Kirim bukti transfer via WhatsApp atau Telegram untuk verifikasi.</span></span></li>
+        </ul>
+      </section>
+
+      <section class="section in" style="--d: 520ms">
+        <h2 class="section-title" style="padding: 0 14px" data-i18n="appearance">Tampilan</h2>
+        <div class="seg" id="seg" role="group" aria-label="Theme">
+          <div class="seg-thumb" aria-hidden="true"></div>
+          <button type="button" data-theme="light" aria-pressed="false"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg><span data-i18n="light">Terang</span></button>
+          <button type="button" data-theme="system" aria-pressed="true"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8M12 17v4"/></svg><span data-i18n="auto">Otomatis</span></button>
+          <button type="button" data-theme="dark" aria-pressed="false"><svg viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z"/></svg><span data-i18n="dark">Gelap</span></button>
         </div>
       </section>
 
-      <!-- HOW TO -->
-      <section class="how-to">
-        <h3 data-i18n="how-to-title">Cara Pembayaran</h3>
-        <p class="how-to-sub" data-i18n="how-to-sub">3 langkah mudah untuk menyelesaikan transaksi</p>
-        <div class="steps">
-          <div class="step">
-            <div class="step-num">1</div>
-            <div class="step-content">
-              <h4>Pilih Metode</h4>
-              <p>Klik salah satu channel pembayaran di atas yang lo mau gunakan.</p>
-            </div>
-          </div>
-          <div class="step">
-            <div class="step-num">2</div>
-            <div class="step-content">
-              <h4>Salin Nomor</h4>
-              <p>Konfirmasi detail, lalu salin nomor rekening atau address.</p>
-            </div>
-          </div>
-          <div class="step">
-            <div class="step-num">3</div>
-            <div class="step-content">
-              <h4>Konfirmasi</h4>
-              <p>Lakukan transfer, lalu kirim bukti via Tele/WA untuk verifikasi.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <div class="footer">
-        <div class="footer-meta">
-          <span>© 2026 officialputuid</span>
-        </div>
-        <div class="footer-meta" style="font-size: 12px; color: var(--text-tertiary); margin-top: 8px;">
-          <span>Last update: September 2026</span>
-        </div>
-      </div>
+      <footer class="footer in" style="--d: 580ms">
+        © <span id="year">2026</span> <a href="https://officialputuid.dpdns.org">officialputuid</a><br /><span data-i18n="updated">Terakhir diperbarui</span>: <span id="updated">Sep 2026</span>
+      </footer>
     </main>
 
-    <div class="snack-host" id="snackHost" aria-live="polite"></div>
-    <div class="modal-overlay" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalName">
-      <div class="modal">
-        <div class="modal-header">
-          <div class="modal-logo" id="modalLogo">💳</div>
-          <div class="modal-title-block">
-            <div class="modal-cat" id="modalCat">Transfer Bank</div>
-            <div class="modal-name" id="modalName">Bank Name</div>
-          </div>
-          <button class="modal-close" id="modalClose" aria-label="Close">
-            <svg
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            >
-              <path d="M18 6 6 18M6 6l12 12" />
-            </svg>
-          </button>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+    <div class="sheet-backdrop" id="sheetBackdrop"></div>
+    <div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="sheetName">
+      <div class="grabber"></div>
+      <div class="sheet-head">
+        <span class="app-icon" id="sheetIcon"></span>
+        <div><div class="sheet-cat" id="sheetCat"></div><div class="sheet-name" id="sheetName"></div></div>
+      </div>
+      <ul class="kv">
+        <li><span class="k" id="kNum"></span><span class="v num" id="sheetNum"></span></li>
+        <li id="rowName" class="with-action"><span><span class="k" data-i18n="holder">Atas nama</span><span class="v">I Putu Jaya Adi Pranata</span></span><button class="row-action" id="copyHolder" type="button" aria-label="Copy name"><svg><use href="#i-copy"/></svg><span class="lbl" data-i18n="copy">Salin</span></button></li>
+        <li id="rowNet" hidden><span class="k" data-i18n="network">Jaringan</span><span class="v" id="sheetNet"></span></li>
+      </ul>
+      <div class="warn" id="sheetWarn"><svg viewBox="0 0 24 24"><path d="M12 9v4M12 17h.01"/><path d="M10.3 3.9L1.8 18a2 2 0 001.7 3h17a2 2 0 001.7-3L13.7 3.9a2 2 0 00-3.4 0z"/></svg><span data-i18n="sheetWarn">Pastikan nama penerima & nomor/alamat sudah benar. Transaksi yang sudah dikirim tidak dapat dibatalkan.</span></div>
+      <div class="actions">
+        <button class="btn primary" id="sheetCopy" type="button"><svg><use href="#i-copy"/></svg><span data-i18n="copy">Salin</span></button>
+        <button class="btn" id="openApp" type="button" hidden><svg viewBox="0 0 24 24"><path d="M14 3h7v7M21 3l-9 9"/><path d="M19 14v5a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h5"/></svg><span id="openAppLbl"></span></button>
+        <div class="sheet-cap" data-i18n="confirmCap">Sudah transfer? Konfirmasi via:</div>
+        <div class="confirm-grid">
+          <a class="btn wa" id="sheetConfirm" href="#" target="_blank" rel="noopener noreferrer"><svg class="brand"><use href="#i-whatsapp"/></svg>WhatsApp</a>
+          <a class="btn tg" id="sheetConfirmTg" href="#" target="_blank" rel="noopener noreferrer"><svg class="brand"><use href="#i-telegram"/></svg>Telegram</a>
         </div>
-        <div class="modal-body">
-          <div class="modal-info" id="modalANRow">
-            <span class="modal-label">Atas Nama</span>
-            <span class="modal-value name" id="modalAN">I PUTU JAYA ADI PRANATA</span>
-          </div>
-          <div class="modal-info" id="modalAddressRow">
-            <span class="modal-label">Address / Nomor</span>
-            <span class="modal-value" id="modalNum">—</span>
-          </div>
-          <div class="modal-info" id="modalNetworkRow" style="display: none;">
-            <span class="modal-label">Network</span>
-            <span class="modal-value" id="modalNetwork">ERC-20</span>
-          </div>
-          <div class="modal-warning">
-            <div class="modal-warning-icon">
-              <svg
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
-                <path d="M12 9v4M12 17h.01" />
-              </svg>
-            </div>
-            <div class="modal-warning-text">
-              Pastikan nama penerima & nomor/alamat sudah benar. Transaksi yang sudah dikirim tidak dapat dibatalkan.
-            </div>
-          </div>
-        </div>
-        <div class="modal-actions">
-          <button class="btn btn-secondary" id="modalCancel">Batal</button>
-          <button class="btn btn-primary" id="modalConfirm">
-            <svg
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            >
-              <rect x="9" y="9" width="13" height="13" rx="2" />
-              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
-            </svg>
-            Salin
-          </button>
-        </div>
+        <button class="btn" id="sheetClose" type="button" data-i18n="close">Tutup</button>
       </div>
     </div>
 
     <script>
-        window.onload = function () {
-            document.addEventListener(
-                "contextmenu",
-                function (e) {
-                    e.preventDefault();
-                },
-                false
-            );
-            document.addEventListener(
-                "keydown",
-                function (e) {
-                    //document.onkeydown = function(e) {
-                    // "I" key
-                    if (e.ctrlKey && e.shiftKey && e.keyCode == 73) {
-                        disabledEvent(e);
-                    }
-                    // "J" key
-                    if (e.ctrlKey && e.shiftKey && e.keyCode == 74) {
-                        disabledEvent(e);
-                    }
-                    // "S" key + macOS
-                    if (e.keyCode == 83 && (navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey)) {
-                        disabledEvent(e);
-                    }
-                    // "U" key
-                    if (e.ctrlKey && e.keyCode == 85) {
-                        disabledEvent(e);
-                    }
-                    // "F12" key
-                    if (event.keyCode == 123) {
-                        disabledEvent(e);
-                    }
-                },
-                false
-            );
-            function disabledEvent(e) {
-                if (e.stopPropagation) {
-                    e.stopPropagation();
-                } else if (window.event) {
-                    window.event.cancelBubble = true;
-                }
-                e.preventDefault();
-                return false;
-            }
-        };
       (() => {
-          'use strict';
+        "use strict";
+        const $ = (s, el = document) => el.querySelector(s);
+        const $$ = (s, el = document) => [...el.querySelectorAll(s)];
+        const root = document.documentElement;
 
-          const MERCHANT = {
-              name: 'I PUTU JAYA ADI PRANATA',
-              wa:   '6281237920900'
-          };
+        /* ── Data: single source of truth ────────────────────────────── */
+        const HOLDER = "I Putu Jaya Adi Pranata";
+        const WA = "6281237920900";
+        // active:false menyembunyikan metode tanpa menghapus datanya. logo: nama file di assets/logos/ (fallback: CDN, lalu inisial).
+        const LOGO_EXT = {"nobu": ".jpg", "seabank": ".jpg", "krom": ".jpg", "jago": ".jpg", "superbank": ".jpg", "dana": ".jpg", "gopay": ".jpg", "ovo": ".jpg", "shopeepay": ".jpg", "eth": ".png", "usdt": ".png", "btc": ".svg", "sol": ".svg"};
+        const LOGO_CDN = {
+          "nobu": "https://cdn.brandfetch.io/idUff5PjIf/w/400/h/400/theme/dark/icon.jpeg?c=1bxzabvxds04q1oi8mcfwt6pxwjySQccOUA",
+          "seabank": "https://cdn.brandfetch.io/idZQucmeCy/w/188/h/188/theme/dark/icon.jpeg?c=1bxzabvxds04q1oi8mcfwt6pxwjySQccOUA",
+          "krom": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQU8ms5EgP6szdcWDRogk_RFFUimSbi1yKYiLaT13ITxw&s=10",
+          "jago": "https://cdn.brandfetch.io/id-KjPgtta/w/400/h/400/theme/dark/icon.jpeg?c=1bxzabvxds04q1oi8mcfwt6pxwjySQccOUA",
+          "dana": "https://cdn.brandfetch.io/idARTrIllV/w/400/h/400/theme/dark/icon.jpeg?c=1bxzabvxds04q1oi8mcfwt6pxwjySQccOUA",
+          "gopay": "https://cdn.brandfetch.io/idQqAF303b/w/400/h/400/theme/dark/icon.jpeg?c=1bxzabvxds04q1oi8mcfwt6pxwjySQccOUA",
+          "ovo": "https://cdn.brandfetch.io/idNsMu-D2y/w/400/h/400/theme/dark/icon.jpeg?c=1bxzabvxds04q1oi8mcfwt6pxwjySQccOUA",
+          "shopeepay": "https://cdn.brandfetch.io/idRrB3liVE/w/400/h/400/theme/dark/icon.jpeg?c=1bxzabvxds04q1oi8mcfwt6pxwjySQccOUA",
+          "eth": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRIWp9Rn5j7k0Lvv0ycoEHlgNa6qFP13sJt7YNecg0Lyg&s=10",
+          "usdt": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQet37hbusRyBPLGCMmGetIset8Ql7UtDnX6jnr_Ekd5Q&s=10",
+          "btc": "https://cdn.brandfetch.io/idkbqeYUg6/w/800/h/800/theme/dark/symbol.png?c=1bxzabvxds04q1oi8mcfwt6pxwjySQccOUA",
+          "sol": "https://cdn.brandfetch.io/ide0NUuTHO/w/800/h/627/theme/light/symbol.png?c=1bxzabvxds04q1oi8mcfwt6pxwjySQccOUA",
+          "superbank": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRe7zBPdhVgjNjRdncPgO__-qq75zqZ_NAn8ZavBy_Kow&s=10"
+        };
+        const METHODS = [
+          { active: true, type: "bank", name: "NOBU",      num: "99901000116040", logo: "NB", img: "nobu",      c: "var(--nobu)", pkg: "com.nobubank.now" },
+          { active: true, type: "bank", name: "SeaBank",   num: "901554870570",   logo: "SB", img: "seabank",   c: "var(--seabank)", pkg: "id.co.bankbkemobile.digitalbank" },
+          { active: true, type: "bank", name: "Krom",      num: "770009470900",   logo: "KR", img: "krom",      c: "var(--krom)", pkg: "com.krom.android" },
+          { active: true, type: "bank", name: "Jago",      num: "100951020606",   logo: "JG", img: "jago",      c: "var(--jago)", pkg: "com.jago.digitalBanking" },
+          { active: true, type: "bank", name: "Superbank", num: "000015761968",   logo: "SP", img: "superbank", c: "var(--superbank)", pkg: "id.co.bankfama.android" },
+          { active: true, type: "ewallet", name: "DANA",      num: "081237920900", logo: "DA", img: "dana",      c: "var(--dana)",      app: "dana://", pkg: "id.dana" },
+          { active: true, type: "ewallet", name: "GoPay",     num: "081237920900", logo: "GP", img: "gopay",     c: "var(--gopay)",     app: "gojek://", pkg: "com.gojek.gopay" },
+          { active: true, type: "ewallet", name: "OVO",       num: "081237920900", logo: "OV", img: "ovo",       c: "var(--ovo)",       app: "ovo://", pkg: "ovo.id" },
+          { active: true, type: "ewallet", name: "ShopeePay", num: "081237920900", logo: "SP", img: "shopeepay", c: "var(--shopeepay)", imgBg: "#ee4d2d", imgScale: 1.22, app: "shopeeid://", pkg: "com.shopeepay.id" },
+          { active: true, type: "crypto", name: "Ethereum (ETH)", num: "0x87E43692D118eb86b428c40a60Db4dF3C794bf79", logo: "Ξ", img: "eth",  c: "var(--eth)",  net: "ERC-20" },
+          { active: true, type: "crypto", name: "USDT (Tether)",  num: "0x87E43692D118eb86b428c40a60Db4dF3C794bf79", logo: "₮", img: "usdt", c: "var(--usdt)", net: "ERC-20" },
+          { active: true, type: "crypto", name: "Bitcoin (BTC)",  num: "bc1qcp77qd5a9mlq7ty7n304wgw7qv3nu2zt6yhe7g", logo: "₿", img: "btc",  c: "var(--btc)",  net: "Bitcoin" },
+          { active: true, type: "crypto", name: "Solana (SOL)",   num: "Bv84zNM5gwn4ePSxJZYZJoNbwEsBBJrWNevnhiapRs8f", logo: "◎", img: "sol", c: "var(--sol)", imgBg: "#000", net: "Solana" },
+        ].filter((m) => m.active !== false);
 
-          const METHODS = {
-              'nobu-99901000116040':        { type: 'bank',    cat: 'Transfer Bank', name: 'NOBU',         num: '99901000116040',       logo: 'NB', logoClass: 'nobu' },
-              'seabank-901554870570':       { type: 'bank',    cat: 'Transfer Bank', name: 'SEABANK',      num: '901554870570',        logo: 'SB', logoClass: 'seabank' },
-              'krom-770009470900':          { type: 'bank',    cat: 'Transfer Bank', name: 'KROM',         num: '770009470900',        logo: 'KR', logoClass: 'krom' },
-              'jago-100951020606':          { type: 'bank',    cat: 'Transfer Bank', name: 'JAGO',         num: '100951020606',        logo: 'JG', logoClass: 'jago' },
-              'superbank-000015761968':     { type: 'bank',    cat: 'Transfer Bank', name: 'SUPERBANK',    num: '000015761968',        logo: 'SB', logoClass: 'superbank' },
-              'dana-081237920900':          { type: 'ewallet', cat: 'E-Wallet',      name: 'DANA',         num: '081237920900',        logo: 'DA', logoClass: 'dana' },
-              'gopay-081237920900':         { type: 'ewallet', cat: 'E-Wallet',      name: 'GOPAY',        num: '081237920900',        logo: 'GP', logoClass: 'gopay' },
-              'ovo-081237920900':           { type: 'ewallet', cat: 'E-Wallet',      name: 'OVO',          num: '081237920900',        logo: 'OV', logoClass: 'ovo' },
-              'shopeepay-081237920900':     { type: 'ewallet', cat: 'E-Wallet',      name: 'SHOPEEPAY',    num: '081237920900',        logo: 'SP', logoClass: 'shopeepay' },
-              'eth-0x87E43692D118eb86b428c40a60Db4dF3C794bf79':    { type: 'crypto',  cat: 'Crypto',  name: 'ETHEREUM (ETH)', num: '0x87E43692D118eb86b428c40a60Db4dF3C794bf79', logo: 'Ξ', logoClass: 'eth', crypto: true, network: 'ERC-20' },
-              'usdt-0x87E43692D118eb86b428c40a60Db4dF3C794bf79':   { type: 'crypto',  cat: 'Crypto',  name: 'USDT (TETHER)', num: '0x87E43692D118eb86b428c40a60Db4dF3C794bf79', logo: '₮', logoClass: 'usdt', crypto: true, network: 'ERC-20' },
-              'btc-bc1qcp77qd5a9mlq7ty7n304wgw7qv3nu2zt6yhe7g':    { type: 'crypto',  cat: 'Crypto',  name: 'BITCOIN (BTC)', num: 'bc1qcp77qd5a9mlq7ty7n304wgw7qv3nu2zt6yhe7g', logo: '₿', logoClass: 'btc', crypto: true, network: 'BTC' },
-              'sol-Bv84zNM5gwn4ePSxJZYZJoNbwEsBBJrWNevnhiapRs8f': { type: 'crypto',  cat: 'Crypto',  name: 'SOL (SOLANA)', num: 'Bv84zNM5gwn4ePSxJZYZJoNbwEsBBJrWNevnhiapRs8f', logo: '◎', logoClass: 'sol', crypto: true, network: 'SOL (Solana)' },
-              'telegram-officialputuid':     { type: 'social',  cat: 'Konfirmasi',  name: 'TELEGRAM',     num: '@officialputuid',    logo: 'TG', logoClass: 'telegram', social: true, url: 'https://t.me/officialputuid' },
-              'whatsapp-6281237920900':      { type: 'social',  cat: 'Konfirmasi',  name: 'WHATSAPP',     num: '+62 812-3792-0900',  logo: 'WA', logoClass: 'whatsapp', social: true, url: 'https://wa.me/6281237920900?text=Halo%2C+saya+ingin+konfirmasi+pembayaran.+Boleh+info+lebih+lanjut%3F' }
-          };
+        /* ── i18n ───────────────────────────────────────────────────── */
+        const I18N = {
+          id: { title: "Payment Info", subtitle: "Halo, terima kasih sudah percaya sama saya 👋 Pilih metode di bawah, lalu jangan lupa konfirmasi ya.",
+                official: "Daftar rekening resmi", search: "Cari bank, e-wallet, crypto…",
+                warn: "Hanya rekening di halaman ini yang resmi. Pastikan nama penerima <b>I Putu Jaya Adi Pranata</b> sebelum transfer. Transaksi yang sudah dikirim tidak bisa dibatalkan.",
+                bank: "Transfer Bank", confirm: "Konfirmasi", howto: "Cara Pembayaran", appearance: "Tampilan",
+                s1t: "Pilih metode", s1d: "Tap salah satu rekening / wallet di atas untuk melihat detail dan menyalin nomornya.",
+                s2t: "Lakukan transfer", s2d: "Transfer sesuai jumlah ke nomor yang tertera. Cek nama penerima sebelum mengirim.",
+                s3t: "Konfirmasi", s3d: "Kirim bukti transfer via WhatsApp atau Telegram untuk verifikasi.",
+                light: "Terang", auto: "Otomatis", dark: "Gelap", updated: "Terakhir diperbarui",
+                holder: "Atas nama", network: "Jaringan", sheetWarn: "Pastikan nama penerima & nomor/alamat sudah benar. Transaksi yang sudah dikirim tidak dapat dibatalkan.",
+                copy: "Salin", confirmCap: "Sudah transfer? Konfirmasi via:", close: "Tutup",
+                urlCheck: "Alamat resmi hanya:", urlOk: "✓ Alamat resmi", urlBad: "Selain alamat ini berarti palsu.",
+                openApp: "Buka aplikasi {m}", appMissing: "Aplikasi tidak terpasang. Nomor sudah disalin.",
+                accNo: "Nomor rekening", phone: "Nomor HP", addr: "Alamat wallet", copied: "Disalin", copyFail: "Gagal menyalin",
+                cat: { bank: "Transfer Bank", ewallet: "E-Wallet", crypto: "Crypto" }, count: { bank: "bank", ewallet: "wallet", crypto: "token" },
+                waMsg: "Halo, saya sudah transfer via {m}. Berikut bukti pembayarannya." },
+          en: { title: "Payment Info", subtitle: "Hi, thanks for trusting me 👋 Pick a method below, then don't forget to confirm.",
+                official: "Official account list", search: "Search bank, e-wallet, crypto…",
+                warn: "Only accounts on this page are official. Make sure the recipient name is <b>I Putu Jaya Adi Pranata</b> before sending. Sent transactions cannot be cancelled.",
+                bank: "Bank Transfer", confirm: "Confirm", howto: "How to Pay", appearance: "Appearance",
+                s1t: "Choose a method", s1d: "Tap an account / wallet above to see details and copy the number.",
+                s2t: "Make the transfer", s2d: "Send the agreed amount to the number shown. Check the recipient name first.",
+                s3t: "Confirm", s3d: "Send the transfer proof via WhatsApp or Telegram for verification.",
+                light: "Light", auto: "Auto", dark: "Dark", updated: "Last updated",
+                holder: "Account name", network: "Network", sheetWarn: "Make sure the recipient name & number/address are correct. Sent transactions cannot be cancelled.",
+                copy: "Copy", confirmCap: "Transferred? Confirm via:", close: "Close",
+                urlCheck: "The only official address:", urlOk: "✓ Official address", urlBad: "Any other address is fake.",
+                openApp: "Open {m} app", appMissing: "App not installed. Number copied.",
+                accNo: "Account number", phone: "Phone number", addr: "Wallet address", copied: "Copied", copyFail: "Copy failed",
+                cat: { bank: "Bank Transfer", ewallet: "E-Wallet", crypto: "Crypto" }, count: { bank: "banks", ewallet: "wallets", crypto: "tokens" },
+                waMsg: "Hi, I've transferred via {m}. Here is the payment proof." },
+        };
+        const urlLang = new URLSearchParams(location.search).get("lang");
+        let savedLang = null; try { savedLang = localStorage.getItem("lang"); } catch {}
+        let lang = (urlLang === "id" || urlLang === "en") ? urlLang : (savedLang || ((navigator.language || "id").toLowerCase().startsWith("en") ? "en" : "id"));
+        const t = (k) => (I18N[lang] || I18N.id)[k];
+        const applyLang = () => {
+          root.lang = lang;
+          $$("[data-i18n]").forEach((el) => { const v = t(el.dataset.i18n); if (v == null) return; el.dataset.i18n === "warn" ? (el.innerHTML = v) : (el.textContent = v); });
+          $$("[data-i18n-ph]").forEach((el) => { el.placeholder = t(el.dataset.i18nPh); });
+          $("#langBtn").textContent = lang === "id" ? "EN" : "ID";
+          const st2 = $("#urlstate"); if (st2.className) st2.textContent = st2.classList.contains("ok") ? t("urlOk") : t("urlBad");
+          renderCounts();
+        };
+        $("#langBtn").addEventListener("click", () => { lang = lang === "id" ? "en" : "id"; try { localStorage.setItem("lang", lang); } catch {} applyLang(); });
 
-          let pendingCopy = null;
-          let pendingMethod = null;
-          const $ = (id) => document.getElementById(id);
-          const modal = $('modal');
-          const snackHost = $('snackHost');
+        /* ── Theme ──────────────────────────────────────────────────── */
+        const systemDark = matchMedia("(prefers-color-scheme: dark)");
+        const seg = $("#seg"), segBtns = $$("button", seg), order = ["light", "system", "dark"];
+        const applyTheme = () => {
+          const th = root.dataset.theme || "system";
+          const dark = th === "dark" || (th === "system" && systemDark.matches);
+          root.classList.toggle("is-dark", dark);
+          seg.style.setProperty("--i", order.indexOf(th));
+          segBtns.forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.theme === th)));
+        };
+        segBtns.forEach((b) => b.addEventListener("click", () => {
+          root.dataset.theme = b.dataset.theme;
+          try { b.dataset.theme === "system" ? localStorage.removeItem("theme") : localStorage.setItem("theme", b.dataset.theme); } catch {}
+          applyTheme(); if (navigator.vibrate) navigator.vibrate(8);
+        }));
+        systemDark.addEventListener("change", applyTheme);
+        applyTheme();
 
-          // LANGUAGE SELECTOR
-          const langBtn = $('langBtn');
-          const langMenu = $('langMenu');
-          const langLabel = $('langLabel');
-          let currentLang = localStorage.getItem('paymentLang') || 'id';
+        /* ── Toast + copy ────────────────────────────────────────────── */
+        const toastEl = $("#toast"); let toastTimer;
+        const toast = (msg) => { toastEl.innerHTML = '<svg viewBox="0 0 24 24"><path d="M5 12l5 5L20 7"/></svg>' + msg; toastEl.classList.add("show"); clearTimeout(toastTimer); toastTimer = setTimeout(() => toastEl.classList.remove("show"), 1800); };
+        const copy = async (text) => {
+          const short = text.length > 18 ? text.slice(0, 8) + "…" + text.slice(-6) : text;
+          try { await navigator.clipboard.writeText(text); }
+          catch {
+            const ta = document.createElement("textarea"); ta.value = text; ta.style.cssText = "position:fixed;opacity:0"; document.body.appendChild(ta); ta.select();
+            try { document.execCommand("copy"); } catch { toast(t("copyFail")); ta.remove(); return; } ta.remove();
+          }
+          toast(t("copied") + ": " + short); if (navigator.vibrate) navigator.vibrate(10);
+        };
 
-          langBtn.addEventListener('click', (e) => {
-              e.stopPropagation();
-              langMenu.classList.toggle('active');
+        /* ── Render lists ────────────────────────────────────────────── */
+        const mask = (m) => m.type === "crypto" ? m.num.slice(0, 6) + "…" + m.num.slice(-4) : m.num;
+        const iconHtml = (m) => {
+          const cdn = (m.img && LOGO_CDN[m.img]) || "";
+          const img = m.img ? `<img src="assets/logos/${m.img}${LOGO_EXT[m.img] || ".png"}" alt="" loading="lazy" decoding="async" data-cdn="${cdn}" onerror="if(this.dataset.cdn){this.src=this.dataset.cdn;this.dataset.cdn='';}else{this.remove();}" />` : "";
+          return `<span class="app-icon${m.type === "crypto" ? " sym" : ""}" style="--c:${m.c}${m.imgBg ? `;--imgbg:${m.imgBg}` : ""}${m.imgScale ? `;--imgscale:${m.imgScale}` : ""}">${img}${m.logo}</span>`;
+        };
+        METHODS.forEach((m, i) => {
+          const ul = $(`.section[data-type="${m.type}"] .group`);
+          const li = document.createElement("li");
+          li.innerHTML = `
+            <button class="row" type="button" data-i="${i}" data-search="${(m.name + " " + m.num + " " + m.type).toLowerCase()}">
+              ${iconHtml(m)}
+              <span class="row-text"><span class="row-title">${m.name}</span><span class="row-sub">${mask(m)}${m.net ? `<span class="net">${m.net}</span>` : ""}</span></span>
+              <span class="row-action" data-copy="${m.num}" role="button" aria-label="Copy"><svg><use href="#i-copy"/></svg><span class="lbl" data-i18n="copy">Salin</span></span>
+              <svg class="chevron"><use href="#i-chevron"/></svg>
+            </button>`;
+          ul.appendChild(li);
+        });
+        const renderCounts = () => $$(".section[data-type]").forEach((s) => {
+          const n = $$(".row:not(.hidden)", s).length;
+          $(".section-count", s).textContent = n + " " + t("count")[s.dataset.type];
+        });
+
+        /* ── Row interactions: tap = sheet, copy pill = copy ─────────── */
+        $$(".row[data-i]").forEach((row) => {
+          row.addEventListener("click", (e) => {
+            const pill = e.target.closest(".row-action");
+            if (pill) { e.stopPropagation(); copy(pill.dataset.copy); return; }
+            openSheet(METHODS[+row.dataset.i]);
           });
+          row.addEventListener("touchstart", () => row.classList.add("pressed"), { passive: true });
+          ["touchend", "touchcancel"].forEach((ev) => row.addEventListener(ev, () => setTimeout(() => row.classList.remove("pressed"), 120), { passive: true }));
+        });
 
-          document.querySelectorAll('.lang-option').forEach(opt => {
-              if (opt.dataset.lang === currentLang) {
-                  opt.classList.add('active');
-              }
-              opt.addEventListener('click', (e) => {
-                  e.stopPropagation();
-                  currentLang = opt.dataset.lang;
-                  localStorage.setItem('paymentLang', currentLang);
-                  langLabel.textContent = currentLang.toUpperCase();
-                  document.querySelectorAll('.lang-option').forEach(o => o.classList.remove('active'));
-                  opt.classList.add('active');
-                  langMenu.classList.remove('active');
-                  applyLanguage(currentLang);
-              });
-          });
+        /* ── Search ─────────────────────────────────────────────────── */
+        const search = $("#searchInput"), searchWrap = $(".search");
+        const runSearch = () => {
+          const q = search.value.trim().toLowerCase();
+          searchWrap.classList.toggle("has-value", !!q);
+          $$(".row[data-i]").forEach((r) => r.classList.toggle("hidden", !!q && !r.dataset.search.includes(q)));
+          $$(".section[data-type]").forEach((s) => s.classList.toggle("hidden", !!q && !$(".row:not(.hidden)", s)));
+          renderCounts();
+        };
+        search.addEventListener("input", runSearch);
+        $("#clearSearch").addEventListener("click", () => { search.value = ""; runSearch(); search.focus(); });
 
-          document.addEventListener('click', () => {
-              langMenu.classList.remove('active');
-          });
-
-          function applyLanguage(lang) {
-              const translations = {
-                  id: {
-                      'hero-eyebrow': 'Payment Info',
-                      'hero-title': 'Halo, terima kasih sudah <span class="highlight-flash">\'confiar\'</span> di saya 👋',
-                      'hero-sub': 'Pilih metode pembayaran favorit kamu dibawah,<br>Jangan lupa konfirmasi ya!',
-                      'search-placeholder': 'Cari bank, e-wallet, crypto, atau channel...',
-                      'bank-title': 'Transfer Bank',
-                      'bank-sub': 'A/N: I Putu Jaya Adi Pranata',
-                      'ewallet-title': 'E-Wallet',
-                      'ewallet-sub': 'A/N: I Putu Jaya Adi Pranata',
-                      'crypto-title': 'Crypto',
-                      'crypto-sub': 'Supports: ERC-20, Bitcoin, Solana',
-                      'konfirmasi-title': 'Konfirmasi',
-                      'konfirmasi-sub': 'Kirim bukti transfer disini.',
-                      'how-to-title': 'Cara Pembayaran',
-                      'how-to-sub': '3 langkah mudah untuk menyelesaikan transaksi',
-                      'modal-warning': 'Pastikan nama penerima & nomor/alamat sudah benar. Transaksi yang sudah dikirim tidak dapat dibatalkan.',
-                      'step-1-title': 'Pilih Metode',
-                      'step-1-desc': 'Pilih metode pembayaran yang paling nyaman untuk kamu.',
-                      'step-2-title': 'Lakukan Transfer',
-                      'step-2-desc': 'Transfer sesuai jumlah dan nomor rekening yang tertera.',
-                      'step-3-title': 'Konfirmasi',
-                      'step-3-desc': 'Lakukan transfer, lalu kirim bukti via Tele/WA untuk verifikasi.',
-                      'btn-batal': 'Batal',
-                      'btn-salin': 'Salin',
-                  },
-                  en: {
-                      'hero-eyebrow': 'Payment Info',
-                      'hero-title': 'Hi, thank you for trusting <span class="highlight-flash">\'me\'</span> 👋',
-                      'hero-sub': 'Choose your favorite payment method below.<br>Don\'t forget to confirm!',
-                      'search-placeholder': 'Search bank, e-wallet, crypto, or channel...',
-                      'bank-title': 'Bank Transfer',
-                      'bank-sub': 'A/N: I Putu Jaya Adi Pranata',
-                      'ewallet-title': 'E-Wallet',
-                      'ewallet-sub': 'A/N: I Putu Jaya Adi Pranata',
-                      'crypto-title': 'Crypto',
-                      'crypto-sub': 'Supports: ERC-20, Bitcoin, Solana',
-                      'konfirmasi-title': 'Confirm',
-                      'konfirmasi-sub': 'Send transfer proof here.',
-                      'how-to-title': 'Payment Steps',
-                      'how-to-sub': '3 easy steps to complete transaction',
-                      'modal-warning': 'Make sure recipient name & number/address are correct. Sent transactions cannot be cancelled.',
-                      'step-1-title': 'Choose Method',
-                      'step-1-desc': 'Choose the payment method that\'s most convenient for you.',
-                      'step-2-title': 'Make Transfer',
-                      'step-2-desc': 'Transfer according to the amount and account number shown.',
-                      'step-3-title': 'Confirm',
-                      'step-3-desc': 'Make transfer, then send proof via Telegram/WhatsApp for verification.',
-                      'btn-batal': 'Cancel',
-                      'btn-salin': 'Copy',
-                  }
-              };
-
-              const t = translations[lang] || translations.id;
-
-              // Update elements by data-i18n
-              document.querySelectorAll('[data-i18n]').forEach(el => {
-                  const key = el.dataset.i18n;
-                  if (t[key]) {
-                      if (key === 'hero-title' || key === 'hero-sub') {
-                          el.innerHTML = t[key];
-                      } else {
-                          el.textContent = t[key];
-                      }
-                  }
-              });
-
-              // Update input placeholder
-              const searchInput = $('searchInput');
-              if (searchInput) {
-                  searchInput.placeholder = t['search-placeholder'];
-              }
-
-              // Update modal warning
-              const modalWarning = document.querySelector('.modal-warning-text');
-              if (modalWarning) {
-                  modalWarning.textContent = t['modal-warning'];
-              }
-
-              // Update step descriptions
-              const steps = document.querySelectorAll('.step');
-              steps.forEach((step, idx) => {
-                  const titleKey = `step-${idx + 1}-title`;
-                  const descKey = `step-${idx + 1}-desc`;
-                  const titleEl = step.querySelector('h4');
-                  const descEl = step.querySelector('p');
-                  if (titleEl && t[titleKey]) titleEl.textContent = t[titleKey];
-                  if (descEl && t[descKey]) descEl.textContent = t[descKey];
-              });
-
-              // Update modal buttons
-              const modalCancel = $('modalCancel');
-              const modalConfirm = $('modalConfirm');
-              if (modalCancel) modalCancel.textContent = t['btn-batal'];
-              if (modalConfirm) {
-                  const svg = modalConfirm.querySelector('svg');
-                  modalConfirm.textContent = t['btn-salin'];
-                  if (svg) modalConfirm.appendChild(svg);
-              }
+        /* ── Detail sheet ───────────────────────────────────────────── */
+        const sheet = $("#sheet"), backdrop = $("#sheetBackdrop");
+        let current = null;
+        const openSheet = (m) => {
+          current = m;
+          $("#sheetIcon").outerHTML = iconHtml(m).replace('class="app-icon', 'id="sheetIcon" class="app-icon');
+          $("#sheetCat").textContent = t("cat")[m.type];
+          $("#sheetName").textContent = m.name;
+          $("#kNum").textContent = m.type === "bank" ? t("accNo") : m.type === "ewallet" ? t("phone") : t("addr");
+          const numEl = $("#sheetNum"); numEl.textContent = m.num; numEl.className = "v " + (m.type === "crypto" ? "addr" : "num");
+          $("#rowName").hidden = m.type === "crypto";
+          $("#rowNet").hidden = !m.net; if (m.net) $("#sheetNet").textContent = m.net;
+          const isAndroid = /Android/i.test(navigator.userAgent), isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+          const openApp = $("#openApp"); openApp.hidden = !((isAndroid && m.pkg) || (isIOS && m.app));
+          $("#openAppLbl").textContent = t("openApp").replace("{m}", m.name);
+          const msg = encodeURIComponent(t("waMsg").replace("{m}", m.name));
+          $("#sheetConfirm").href = "https://wa.me/" + WA + "?text=" + msg;
+          $("#sheetConfirmTg").href = "https://t.me/officialputuid?text=" + msg;
+          sheet.classList.add("open"); backdrop.classList.add("open");
+        };
+        const closeSheet = () => { sheet.classList.remove("open"); backdrop.classList.remove("open"); };
+        $("#sheetCopy").addEventListener("click", () => { if (current) copy(current.num); });
+        $("#copyHolder").addEventListener("click", () => copy(HOLDER));
+        $("#openApp").addEventListener("click", () => {
+          if (!current) return;
+          copy(current.num);                      // salin dulu, lalu buka app
+          if (/Android/i.test(navigator.userAgent) && current.pkg) {
+            // Android intent: buka app via package name; kalau belum terpasang → Play Store
+            const play = "https://play.google.com/store/apps/details?id=" + current.pkg;
+            location.href = "intent://#Intent;package=" + current.pkg + ";S.browser_fallback_url=" + encodeURIComponent(play) + ";end";
+            return;
           }
-
-          // Initialize language
-          langLabel.textContent = currentLang.toUpperCase();
-          applyLanguage(currentLang);
-
-          // THEME
-          const ICONS = {
-              light: '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>',
-              dark:  '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>',
-              auto:  '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>'
-          };
-          function applyTheme(theme) {
-              document.documentElement.setAttribute('data-theme', theme);
-              localStorage.setItem('paymentTheme', theme);
-              const icon = $('themeIcon');
-              if (theme === 'light')      icon.innerHTML = ICONS.dark;
-              else if (theme === 'dark')  icon.innerHTML = ICONS.light;
-              else                         icon.innerHTML = ICONS.auto;
+          if (current.app) {
+            const t0 = Date.now(); location.href = current.app;
+            setTimeout(() => { if (Date.now() - t0 < 1500 && !document.hidden) toast(t("appMissing")); }, 1200);
           }
-          function toggleTheme() {
-              const cur = document.documentElement.getAttribute('data-theme') || 'auto';
-              const next = cur === 'auto' ? 'light' : cur === 'light' ? 'dark' : 'auto';
-              applyTheme(next);
-          }
-          $('themeBtn').addEventListener('click', toggleTheme);
+        });
+        $("#sheetClose").addEventListener("click", closeSheet);
+        backdrop.addEventListener("click", closeSheet);
+        addEventListener("keydown", (e) => { if (e.key === "Escape") closeSheet(); });
 
-          // SEARCH
-          const searchInput = $('searchInput');
-          searchInput.addEventListener('input', (e) => {
-              const q = e.target.value.toLowerCase().trim();
-              const sections = document.querySelectorAll('.section');
-              sections.forEach(section => {
-                  const sectionSearch = (section.dataset.search || '').toLowerCase();
-                  const cards = section.querySelectorAll('.pay-card');
-                  let visible = 0;
-                  cards.forEach(card => {
-                      const cardSearch = (card.dataset.search || '').toLowerCase();
-                      const cardName   = (card.querySelector('.pay-name')?.textContent || '').toLowerCase();
-                      const cardNum    = (card.querySelector('.pay-num')?.textContent || '').toLowerCase();
-                      const match = !q || sectionSearch.includes(q) || cardSearch.includes(q) || cardName.includes(q) || cardNum.includes(q);
-                      card.style.display = match ? '' : 'none';
-                      if (match) visible++;
-                  });
-                  const empty = section.querySelector('.empty');
-                  if (q && visible === 0) section.classList.add('hidden');
-                  else section.classList.remove('hidden');
-              });
-          });
-
-          // ====================================================
-          // CARD CLICK → OPEN MODAL or SOCIAL LINK
-          // ====================================================
-          document.querySelectorAll('.pay-card').forEach(card => {
-              card.addEventListener('click', () => {
-                  const id = card.dataset.id;
-                  const method = METHODS[id];
-                  if (!method) return;
-                  if (method.social && method.url) {
-                      window.open(method.url, '_blank');
-                      return;
-                  }
-                  openModal(id, method);
-              });
-          });
-
-          // MODAL
-          function openModal(id, method) {
-              pendingCopy = method.num;
-              pendingMethod = method;
-
-              const modalLogo = $('modalLogo');
-              modalLogo.textContent = method.logo;
-              modalLogo.className = 'modal-logo ' + (method.crypto ? 'crypto ' : '') + (method.logoClass || '');
-
-              $('modalCat').textContent = method.cat;
-
-              const modalNameEl = $('modalName');
-              modalNameEl.textContent = method.name;
-              modalNameEl.style.display = method.name ? 'block' : 'none';
-
-              // Hide "Atas Nama" for crypto
-              $('modalANRow').style.display = method.crypto ? 'none' : 'flex';
-
-              $('modalNum').textContent = method.num;
-
-              const netRow = $('modalNetworkRow');
-              if (method.network) {
-                  netRow.style.display = 'flex';
-                  $('modalNetwork').textContent = method.network;
-              } else {
-                  netRow.style.display = 'none';
-              }
-
-              modal.classList.add('active');
-          }
-
-          function closeModal() {
-              modal.classList.remove('active');
-              pendingCopy = null;
-              pendingMethod = null;
-          }
-
-          $('modalClose').addEventListener('click', closeModal);
-          $('modalCancel').addEventListener('click', closeModal);
-          modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
-          document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && modal.classList.contains('active')) closeModal(); });
-
-          $('modalConfirm').addEventListener('click', () => {
-              if (pendingCopy) {
-                  doCopy(pendingCopy, pendingMethod);
-                  closeModal();
-              }
-          });
-
-          // COPY
-          function doCopy(text, method) {
-              const onSuccess = () => {
-                  const short = text.length > 16 ? text.slice(0, 6) + '…' + text.slice(-4) : text;
-                  showSnack(`Disalin: ${short}`, 'success');
-              };
-              const onFail = () => showSnack('Gagal menyalin', 'error');
-              if (navigator.clipboard && window.isSecureContext) {
-                  navigator.clipboard.writeText(text).then(onSuccess).catch(() => {
-                      fallbackCopy(text);
-                      onSuccess();
-                  });
-              } else {
-                  fallbackCopy(text);
-                  onSuccess();
-              }
-          }
-          function fallbackCopy(text) {
-              const ta = document.createElement('textarea');
-              ta.value = text;
-              ta.style.position = 'fixed';
-              ta.style.opacity = '0';
-              document.body.appendChild(ta);
-              ta.select();
-              try { document.execCommand('copy'); } catch (e) {}
-              document.body.removeChild(ta);
-          }
-
-          // SNACKBAR
-          function showSnack(message, type = 'default') {
-              const el = document.createElement('div');
-              el.className = 'snack ' + (type !== 'default' ? type : '');
-              el.innerHTML = `
-                  <div class="snack-icon">
-                      ${type === 'success'
-                          ? '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>'
-                          : type === 'error'
-                          ? '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6M9 9l6 6"/></svg>'
-                          : '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>'}
-                  </div>
-                  <div class="snack-text">${escapeHtml(message)}</div>
-                  <button class="snack-close" aria-label="Close">
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
-                  </button>
-              `;
-              snackHost.appendChild(el);
-              requestAnimationFrame(() => el.classList.add('show'));
-              const remove = () => {
-                  el.classList.remove('show');
-                  setTimeout(() => el.remove(), 250);
-              };
-              el.querySelector('.snack-close').addEventListener('click', remove);
-              setTimeout(remove, 3000);
-          }
-          function escapeHtml(s) {
-              return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
-          }
-
-          // INIT
-          const saved = localStorage.getItem('paymentTheme') || 'auto';
-          applyTheme(saved);
-          if (!sessionStorage.getItem('greeted')) {
-              setTimeout(() => showSnack('👋 Pilih metode pembayaran favorit lo', 'default'), 600);
-              sessionStorage.setItem('greeted', '1');
-          }
+        /* ── Init ───────────────────────────────────────────────────── */
+        $("#year").textContent = new Date().getFullYear();
+        const lm = new Date(document.lastModified);
+        if (!isNaN(lm)) $("#updated").textContent = lm.toLocaleDateString(lang === "id" ? "id-ID" : "en-GB", { day: "numeric", month: "short", year: "numeric" });
+        // URL check (5)
+        const okHost = location.hostname === "payment.officialputuid.dpdns.org";
+        const st = $("#urlstate"); st.textContent = okHost ? t("urlOk") : t("urlBad"); st.className = "urlstate " + (okHost ? "ok" : "bad");
+        applyLang();
       })();
     </script>
   </body>
